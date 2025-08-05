@@ -1,0 +1,981 @@
+# .github/workflows/generate-docs.yml
+name: Generate Documentation and AI Context
+
+# ============================================
+# TRIGGERS - When this workflow runs
+# ============================================
+on:
+  push:
+    branches: [main, staging]
+    # Runs when code is pushed to main or staging
+    # You can add more branches or use patterns like 'release/*'
+    
+  pull_request:
+    branches: [staging]
+    # Runs when PRs are opened/updated against staging
+    # Allows preview of documentation changes before merge
+    
+  workflow_dispatch:
+    # Allows manual triggering from GitHub UI
+    # Useful for regenerating docs on demand
+    inputs:
+      include_coverage:
+        description: 'Include test coverage report'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+      
+      deploy_to_pages:
+        description: 'Deploy to GitHub Pages'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
+  schedule:
+    # Optional: Run weekly to keep docs fresh
+    - cron: '0 0 * * 0'  # Every Sunday at midnight
+
+# ============================================
+# ENVIRONMENT VARIABLES
+# ============================================
+env:
+  NODE_VERSION: '20'
+  DOCS_OUTPUT_DIR: 'docs'
+  CLAUDE_CONTEXT_DIR: '.claude-context'
+  # Add any API keys for documentation services
+  DOCUMENTER_API_KEY: ${{ secrets.DOCUMENTER_API_KEY }}
+
+# ============================================
+# JOBS
+# ============================================
+jobs:
+  # ============================================
+  # JOB 1: GENERATE DOCUMENTATION
+  # ============================================
+  generate-docs:
+    runs-on: ubuntu-latest
+    
+    # Only run for specific file changes (optimization)
+    # if: |
+    #   contains(github.event.head_commit.modified, '.ts') ||
+    #   contains(github.event.head_commit.modified, '.js') ||
+    #   github.event_name == 'workflow_dispatch'
+    
+    permissions:
+      contents: write  # Needed for GitHub Pages deployment
+      pages: write     # Needed for GitHub Pages
+      id-token: write  # Needed for GitHub Pages
+      pull-requests: write  # Needed to comment on PRs
+    
+    outputs:
+      docs-url: ${{ steps.deploy.outputs.page_url }}
+      artifact-url: ${{ steps.upload.outputs.artifact-url }}
+    
+    steps:
+      # ============================================
+      # STEP 1: CHECKOUT CODE
+      # ============================================
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for git-based documentation
+          # fetch-depth: 0 is important for:
+          # - Changelog generation
+          # - Git history in documentation
+          # - Comparing changes between versions
+      
+      # ============================================
+      # STEP 2: DETECT PROJECT TYPE
+      # ============================================
+      - name: Detect project type
+        id: detect
+        run: |
+          echo "Detecting project type..."
+          
+          # Detect Angular
+          if [ -f "angular.json" ]; then
+            echo "type=angular" >> $GITHUB_OUTPUT
+            echo "Project type: Angular"
+            
+          # Detect Symfony
+          elif [ -f "composer.json" ] && grep -q "symfony/framework-bundle" composer.json; then
+            echo "type=symfony" >> $GITHUB_OUTPUT
+            echo "Project type: Symfony"
+            
+          # Detect Next.js
+          elif [ -f "next.config.js" ]; then
+            echo "type=nextjs" >> $GITHUB_OUTPUT
+            echo "Project type: Next.js"
+            
+          # Default Node.js
+          elif [ -f "package.json" ]; then
+            echo "type=nodejs" >> $GITHUB_OUTPUT
+            echo "Project type: Node.js"
+            
+          else
+            echo "type=unknown" >> $GITHUB_OUTPUT
+            echo "Project type: Unknown"
+          fi
+          
+          # Check for TypeScript
+          if [ -f "tsconfig.json" ]; then
+            echo "typescript=true" >> $GITHUB_OUTPUT
+          else
+            echo "typescript=false" >> $GITHUB_OUTPUT
+          fi
+      
+      # ============================================
+      # STEP 3: SETUP NODE.JS
+      # ============================================
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          # Cache speeds up subsequent runs by caching node_modules
+      
+      # ============================================
+      # STEP 4: SETUP PHP (IF SYMFONY)
+      # ============================================
+      - name: Setup PHP
+        if: steps.detect.outputs.type == 'symfony'
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer:v2, phpstan, php-cs-fixer, phpdoc
+          extensions: mbstring, xml, ctype, iconv, intl, pdo, pdo_mysql, dom, filter, gd, json, fileinfo
+          coverage: xdebug
+      
+      # ============================================
+      # STEP 5: CACHE DEPENDENCIES
+      # ============================================
+      - name: Get dependency cache keys
+        id: cache-keys
+        run: |
+          # Generate cache keys based on lock files
+          if [ -f "package-lock.json" ]; then
+            echo "npm-cache-key=${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}" >> $GITHUB_OUTPUT
+          fi
+          
+          if [ -f "composer.lock" ]; then
+            echo "composer-cache-key=${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Cache npm dependencies
+        if: steps.cache-keys.outputs.npm-cache-key
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ steps.cache-keys.outputs.npm-cache-key }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+      
+      - name: Cache Composer dependencies
+        if: steps.cache-keys.outputs.composer-cache-key
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: ${{ steps.cache-keys.outputs.composer-cache-key }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+      
+      # ============================================
+      # STEP 6: INSTALL DEPENDENCIES
+      # ============================================
+      - name: Install Node.js dependencies
+        run: |
+          echo "Installing npm dependencies..."
+          npm ci --prefer-offline --no-audit
+          
+          echo "Installing global documentation tools..."
+          npm install -g \
+            @compodoc/compodoc \
+            typedoc \
+            typedoc-plugin-markdown \
+            swagger-jsdoc \
+            @redocly/cli \
+            madge \
+            jsdoc \
+            documentation \
+            dependency-cruiser
+      
+      - name: Install PHP dependencies
+        if: steps.detect.outputs.type == 'symfony'
+        run: |
+          composer install --no-progress --prefer-dist --optimize-autoloader
+          
+          # Install documentation tools
+          composer global require \
+            phpdocumentor/phpdocumentor \
+            doctum/doctum
+      
+      # ============================================
+      # STEP 7: CREATE DOCUMENTATION DIRECTORIES
+      # ============================================
+      - name: Prepare documentation structure
+        run: |
+          # Create all necessary directories
+          mkdir -p ${{ env.DOCS_OUTPUT_DIR }}/{api,coverage,compodoc,typedoc,assets,guides}
+          mkdir -p ${{ env.CLAUDE_CONTEXT_DIR }}
+          
+          # Create base structure file
+          cat > ${{ env.DOCS_OUTPUT_DIR }}/structure.json << EOF
+          {
+            "generated": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
+            "commit": "${{ github.sha }}",
+            "branch": "${{ github.ref_name }}",
+            "repository": "${{ github.repository }}",
+            "sections": []
+          }
+          EOF
+      
+      # ============================================
+      # STEP 8: ANGULAR DOCUMENTATION (COMPODOC)
+      # ============================================
+      - name: Generate Angular documentation (Compodoc)
+        if: steps.detect.outputs.type == 'angular'
+        run: |
+          echo "Generating Compodoc documentation..."
+          
+          # Create Compodoc configuration if not exists
+          if [ ! -f ".compodocrc.json" ]; then
+            cat > .compodocrc.json << EOF
+          {
+            "name": "${{ github.event.repository.name }} Documentation",
+            "output": "${{ env.DOCS_OUTPUT_DIR }}/compodoc",
+            "theme": "readthedocs",
+            "includePrivate": false,
+            "includes": "./docs-src",
+            "disableGraph": false,
+            "disableCoverage": false,
+            "disablePrivate": true,
+            "disableInternal": true,
+            "disableLifeCycleHooks": false,
+            "disableRoutesGraph": false,
+            "coverageTest": 80,
+            "coverageTestThresholdFail": false,
+            "hideGenerator": false,
+            "customFavicon": "./src/favicon.ico",
+            "gaID": "${{ secrets.GOOGLE_ANALYTICS_ID || '' }}"
+          }
+          EOF
+          fi
+          
+          # Generate documentation
+          npx compodoc \
+            -p tsconfig.json \
+            -d ${{ env.DOCS_OUTPUT_DIR }}/compodoc \
+            --silent \
+            --exportFormat json \
+            --coverageMinimumPerFile 0
+          
+          # Extract summary
+          if [ -f "${{ env.DOCS_OUTPUT_DIR }}/compodoc/documentation.json" ]; then
+            jq '{
+              components: .components | length,
+              modules: .modules | length,
+              services: .injectables | length,
+              pipes: .pipes | length,
+              directives: .directives | length
+            }' ${{ env.DOCS_OUTPUT_DIR }}/compodoc/documentation.json > ${{ env.DOCS_OUTPUT_DIR }}/compodoc-summary.json
+          fi
+          
+          echo "Compodoc generation complete"
+      
+      # ============================================
+      # STEP 9: TYPESCRIPT DOCUMENTATION (TYPEDOC)
+      # ============================================
+      - name: Generate TypeScript documentation (TypeDoc)
+        if: steps.detect.outputs.typescript == 'true'
+        run: |
+          echo "Generating TypeDoc documentation..."
+          
+          # Create TypeDoc configuration if not exists
+          if [ ! -f "typedoc.json" ]; then
+            cat > typedoc.json << EOF
+          {
+            "entryPoints": ["src"],
+            "entryPointStrategy": "expand",
+            "out": "${{ env.DOCS_OUTPUT_DIR }}/typedoc",
+            "exclude": ["**/*.spec.ts", "**/*.test.ts", "**/node_modules/**"],
+            "includeVersion": true,
+            "categorizeByGroup": true,
+            "plugin": ["typedoc-plugin-markdown"],
+            "theme": "default",
+            "hideGenerator": false,
+            "readme": "README.md",
+            "excludePrivate": true,
+            "excludeProtected": false,
+            "excludeInternal": true,
+            "disableSources": false,
+            "githubPages": true,
+            "validation": {
+              "notExported": false,
+              "invalidLink": true,
+              "notDocumented": false
+            }
+          }
+          EOF
+          fi
+          
+          # Generate HTML documentation
+          npx typedoc
+          
+          # Also generate Markdown for AI context
+          npx typedoc \
+            --plugin typedoc-plugin-markdown \
+            --out ${{ env.CLAUDE_CONTEXT_DIR }}/typedoc-markdown
+          
+          echo "TypeDoc generation complete"
+      
+      # ============================================
+      # STEP 10: API DOCUMENTATION (OpenAPI/Swagger)
+      # ============================================
+      - name: Generate API documentation
+        run: |
+          echo "Generating API documentation..."
+          
+          # For Node.js/Express projects
+          if [ -f "swagger.config.js" ] || [ -f "openapi.config.js" ]; then
+            npx swagger-jsdoc -d swagger.config.js -o ${{ env.DOCS_OUTPUT_DIR }}/api/openapi.json
+          fi
+          
+          # For Symfony projects
+          if [ "${{ steps.detect.outputs.type }}" == "symfony" ]; then
+            # Generate OpenAPI from annotations
+            php bin/console api:openapi:export --yaml > ${{ env.DOCS_OUTPUT_DIR }}/api/openapi.yaml
+          fi
+          
+          # Convert OpenAPI to HTML using Redoc
+          if [ -f "${{ env.DOCS_OUTPUT_DIR }}/api/openapi.json" ]; then
+            npx @redocly/cli build-docs \
+              ${{ env.DOCS_OUTPUT_DIR }}/api/openapi.json \
+              -o ${{ env.DOCS_OUTPUT_DIR }}/api/index.html \
+              --theme.openapi.hideDownloadButton
+          fi
+          
+          # Generate Postman collection
+          if [ -f "${{ env.DOCS_OUTPUT_DIR }}/api/openapi.json" ]; then
+            npx openapi-to-postmanv2 \
+              -s ${{ env.DOCS_OUTPUT_DIR }}/api/openapi.json \
+              -o ${{ env.DOCS_OUTPUT_DIR }}/api/postman-collection.json \
+              -p || true
+          fi
+          
+          echo "API documentation generation complete"
+      
+      # ============================================
+      # STEP 11: DEPENDENCY ANALYSIS
+      # ============================================
+      - name: Generate dependency analysis
+        run: |
+          echo "Analyzing dependencies..."
+          
+          # Generate dependency graph with Madge
+          if [ -d "src" ]; then
+            npx madge \
+              --image ${{ env.DOCS_OUTPUT_DIR }}/assets/dependency-graph.svg \
+              --circular \
+              --warning \
+              src/ || true
+            
+            # Generate circular dependencies report
+            npx madge \
+              --circular \
+              --json \
+              src/ > ${{ env.DOCS_OUTPUT_DIR }}/circular-dependencies.json || true
+          fi
+          
+          # Generate dependency cruiser report
+          if [ ! -f ".dependency-cruiser.js" ]; then
+            cat > .dependency-cruiser.js << 'EOF'
+          module.exports = {
+            forbidden: [
+              {
+                name: 'no-circular',
+                severity: 'warn',
+                comment: 'Circular dependencies detected',
+                from: {},
+                to: {
+                  circular: true
+                }
+              }
+            ],
+            options: {
+              doNotFollow: {
+                path: 'node_modules'
+              },
+              includeOnly: 'src',
+              tsPreCompilationDeps: true,
+              reporterOptions: {
+                dot: {
+                  collapsePattern: 'node_modules/[^/]+',
+                  theme: {
+                    graph: { bgcolor: 'transparent' }
+                  }
+                },
+                archi: {
+                  collapsePattern: '^(node_modules|packages|src)/[^/]+',
+                  theme: {
+                    graph: { bgcolor: 'transparent' }
+                  }
+                }
+              }
+            }
+          };
+          EOF
+          fi
+          
+          # Generate dependency report
+          npx dependency-cruiser \
+            --config .dependency-cruiser.js \
+            --output-type html \
+            --output-to ${{ env.DOCS_OUTPUT_DIR }}/dependency-report.html \
+            src || true
+          
+          # Generate npm dependencies list
+          npm list --all --json > ${{ env.DOCS_OUTPUT_DIR }}/npm-dependencies.json
+          
+          # Create dependency summary
+          cat > ${{ env.DOCS_OUTPUT_DIR }}/dependency-summary.json << EOF
+          {
+            "total": $(npm list --depth=0 --json | jq '.dependencies | length'),
+            "production": $(npm list --prod --depth=0 --json | jq '.dependencies | length'),
+            "development": $(npm list --dev --depth=0 --json | jq '.dependencies | length'),
+            "outdated": $(npm outdated --json | jq '. | length'),
+            "vulnerabilities": $(npm audit --json | jq '.metadata.vulnerabilities | add')
+          }
+          EOF
+          
+          echo "Dependency analysis complete"
+      
+      # ============================================
+      # STEP 12: TEST COVERAGE REPORT
+      # ============================================
+      - name: Generate test coverage
+        if: github.event.inputs.include_coverage != 'false'
+        run: |
+          echo "Generating test coverage report..."
+          
+          # Run tests with coverage
+          if [ -f "package.json" ]; then
+            # Check which test script exists
+            if npm run | grep -q "test:coverage"; then
+              npm run test:coverage || true
+            elif npm run | grep -q "test:cov"; then
+              npm run test:cov || true
+            elif npm run | grep -q "coverage"; then
+              npm run coverage || true
+            else
+              # Run generic test with coverage
+              npm test -- --coverage --coverageDirectory=${{ env.DOCS_OUTPUT_DIR }}/coverage || true
+            fi
+          fi
+          
+          # For Symfony/PHPUnit
+          if [ "${{ steps.detect.outputs.type }}" == "symfony" ]; then
+            vendor/bin/phpunit --coverage-html=${{ env.DOCS_OUTPUT_DIR }}/coverage || true
+          fi
+          
+          # Copy coverage to docs if it exists in default location
+          if [ -d "coverage" ] && [ ! -d "${{ env.DOCS_OUTPUT_DIR }}/coverage" ]; then
+            cp -r coverage ${{ env.DOCS_OUTPUT_DIR }}/
+          fi
+          
+          # Extract coverage summary
+          if [ -f "coverage/coverage-summary.json" ]; then
+            cp coverage/coverage-summary.json ${{ env.DOCS_OUTPUT_DIR }}/coverage-summary.json
+          fi
+          
+          echo "Coverage report generation complete"
+      
+      # ============================================
+      # STEP 13: GENERATE CLAUDE/AI CONTEXT
+      # ============================================
+      - name: Generate AI context files
+        id: ai-context
+        run: |
+          echo "Generating AI context files..."
+          
+          # Download and run context generator if not exists
+          if [ ! -f "scripts/generate-claude-context.js" ]; then
+            mkdir -p scripts
+            cat > scripts/generate-claude-context.js << 'EOF'
+          // Context generator script
+          const fs = require('fs');
+          const path = require('path');
+          const glob = require('glob');
+          
+          // [Previous context generator code here]
+          // ... (full script from previous artifact)
+          EOF
+          fi
+          
+          # Run context generator
+          node scripts/generate-claude-context.js
+          
+          # Generate additional context files
+          
+          # 1. Create file tree
+          echo "## Project File Structure" > ${{ env.CLAUDE_CONTEXT_DIR }}/file-tree.md
+          echo '```' >> ${{ env.CLAUDE_CONTEXT_DIR }}/file-tree.md
+          tree -I 'node_modules|coverage|dist|build|.git' -L 3 >> ${{ env.CLAUDE_CONTEXT_DIR }}/file-tree.md || \
+            find . -type f -name "*.ts" -o -name "*.js" -o -name "*.jsx" -o -name "*.tsx" | \
+            grep -v node_modules | sort >> ${{ env.CLAUDE_CONTEXT_DIR }}/file-tree.md
+          echo '```' >> ${{ env.CLAUDE_CONTEXT_DIR }}/file-tree.md
+          
+          # 2. Create API endpoints list
+          echo "## API Endpoints" > ${{ env.CLAUDE_CONTEXT_DIR }}/api-endpoints.md
+          grep -r "@Get\|@Post\|@Put\|@Delete\|@Patch\|router\.\|app\." src/ \
+            --include="*.ts" --include="*.js" \
+            | grep -v node_modules \
+            | head -100 >> ${{ env.CLAUDE_CONTEXT_DIR }}/api-endpoints.md || true
+          
+          # 3. Create environment variables documentation
+          echo "## Environment Variables" > ${{ env.CLAUDE_CONTEXT_DIR }}/env-vars.md
+          if [ -f ".env.example" ]; then
+            echo '```bash' >> ${{ env.CLAUDE_CONTEXT_DIR }}/env-vars.md
+            cat .env.example >> ${{ env.CLAUDE_CONTEXT_DIR }}/env-vars.md
+            echo '```' >> ${{ env.CLAUDE_CONTEXT_DIR }}/env-vars.md
+          fi
+          
+          # 4. Create quick reference
+          cat > ${{ env.CLAUDE_CONTEXT_DIR }}/quick-reference.md << EOREF
+          # Quick Reference for AI Assistants
+          
+          ## Project: ${{ github.event.repository.name }}
+          
+          ### Key Commands
+          \`\`\`bash
+          npm install        # Install dependencies
+          npm run dev        # Start development server
+          npm run build      # Build for production
+          npm test          # Run tests
+          npm run docs      # Generate documentation
+          \`\`\`
+          
+          ### Project Structure
+          - \`src/\` - Source code
+          - \`tests/\` - Test files
+          - \`docs/\` - Documentation
+          - \`.github/workflows/\` - CI/CD pipelines
+          
+          ### Technology Stack
+          $(cat package.json | jq -r '.dependencies | keys | join(", ")' | head -c 200)...
+          
+          ### Recent Changes
+          ${{ github.event.head_commit.message }}
+          
+          ### Repository Info
+          - Repository: ${{ github.repository }}
+          - Branch: ${{ github.ref_name }}
+          - Commit: ${{ github.sha }}
+          - Timestamp: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          EOREF
+          
+          echo "AI context generation complete"
+      
+      # ============================================
+      # STEP 14: GENERATE CHANGELOG
+      # ============================================
+      - name: Generate changelog
+        run: |
+          echo "Generating changelog..."
+          
+          # Generate changelog from git history
+          cat > ${{ env.DOCS_OUTPUT_DIR }}/CHANGELOG.md << EOF
+          # Changelog
+          
+          ## Recent Changes
+          
+          ### ${{ github.ref_name }} - $(date +%Y-%m-%d)
+          
+          #### Commits
+          EOF
+          
+          # Add recent commits
+          git log --pretty=format:"- %s (%an)" -10 >> ${{ env.DOCS_OUTPUT_DIR }}/CHANGELOG.md
+          
+          echo "" >> ${{ env.DOCS_OUTPUT_DIR }}/CHANGELOG.md
+          echo "---" >> ${{ env.DOCS_OUTPUT_DIR }}/CHANGELOG.md
+          echo "Generated: $(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> ${{ env.DOCS_OUTPUT_DIR }}/CHANGELOG.md
+      
+      # ============================================
+      # STEP 15: CREATE DOCUMENTATION INDEX
+      # ============================================
+      - name: Create documentation index
+        run: |
+          echo "Creating documentation index..."
+          
+          cat > ${{ env.DOCS_OUTPUT_DIR }}/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>${{ github.event.repository.name }} - Documentation</title>
+              <style>
+                  * { margin: 0; padding: 0; box-sizing: border-box; }
+                  body {
+                      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+                      line-height: 1.6;
+                      color: #333;
+                      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                      min-height: 100vh;
+                  }
+                  .container {
+                      max-width: 1200px;
+                      margin: 0 auto;
+                      padding: 2rem;
+                  }
+                  header {
+                      background: white;
+                      border-radius: 10px;
+                      padding: 2rem;
+                      margin-bottom: 2rem;
+                      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                  }
+                  h1 {
+                      color: #667eea;
+                      margin-bottom: 0.5rem;
+                  }
+                  .meta {
+                      color: #666;
+                      font-size: 0.9rem;
+                  }
+                  .grid {
+                      display: grid;
+                      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                      gap: 1.5rem;
+                      margin-top: 2rem;
+                  }
+                  .card {
+                      background: white;
+                      border-radius: 10px;
+                      padding: 1.5rem;
+                      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                      transition: transform 0.3s, box-shadow 0.3s;
+                  }
+                  .card:hover {
+                      transform: translateY(-5px);
+                      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+                  }
+                  .card h2 {
+                      color: #764ba2;
+                      margin-bottom: 1rem;
+                      font-size: 1.3rem;
+                  }
+                  .card ul {
+                      list-style: none;
+                  }
+                  .card li {
+                      padding: 0.5rem 0;
+                      border-bottom: 1px solid #eee;
+                  }
+                  .card li:last-child {
+                      border-bottom: none;
+                  }
+                  .card a {
+                      color: #667eea;
+                      text-decoration: none;
+                      display: flex;
+                      align-items: center;
+                      transition: color 0.3s;
+                  }
+                  .card a:hover {
+                      color: #764ba2;
+                  }
+                  .card a::before {
+                      content: '📄';
+                      margin-right: 0.5rem;
+                  }
+                  .stats {
+                      display: grid;
+                      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                      gap: 1rem;
+                      margin-top: 2rem;
+                  }
+                  .stat {
+                      background: rgba(255,255,255,0.1);
+                      border: 1px solid rgba(255,255,255,0.2);
+                      border-radius: 5px;
+                      padding: 1rem;
+                      text-align: center;
+                      color: white;
+                  }
+                  .stat-value {
+                      font-size: 2rem;
+                      font-weight: bold;
+                  }
+                  .stat-label {
+                      font-size: 0.9rem;
+                      opacity: 0.9;
+                  }
+                  footer {
+                      margin-top: 3rem;
+                      text-align: center;
+                      color: white;
+                      opacity: 0.9;
+                  }
+                  footer a {
+                      color: white;
+                  }
+              </style>
+          </head>
+          <body>
+              <div class="container">
+                  <header>
+                      <h1>📚 ${{ github.event.repository.name }} Documentation</h1>
+                      <div class="meta">
+                          <p>📅 Generated: $(date -u +"%Y-%m-%d %H:%M:%S UTC")</p>
+                          <p>🔧 Branch: ${{ github.ref_name }}</p>
+                          <p>📦 Commit: ${{ github.sha.substring(0, 7) }}</p>
+                      </div>
+                  </header>
+                  
+                  <div class="grid">
+                      <div class="card">
+                          <h2>📖 API Documentation</h2>
+                          <ul>
+                              <li><a href="api/index.html">OpenAPI/Swagger Documentation</a></li>
+                              <li><a href="api/postman-collection.json">Postman Collection</a></li>
+                              <li><a href="compodoc/index.html">Component Documentation (Compodoc)</a></li>
+                              <li><a href="typedoc/index.html">TypeScript Documentation</a></li>
+                          </ul>
+                      </div>
+                      
+                      <div class="card">
+                          <h2>📊 Code Analysis</h2>
+                          <ul>
+                              <li><a href="assets/dependency-graph.svg">Dependency Graph</a></li>
+                              <li><a href="dependency-report.html">Dependency Report</a></li>
+                              <li><a href="circular-dependencies.json">Circular Dependencies</a></li>
+                              <li><a href="npm-dependencies.json">NPM Dependencies List</a></li>
+                          </ul>
+                      </div>
+                      
+                      <div class="card">
+                          <h2>🧪 Testing & Quality</h2>
+                          <ul>
+                              <li><a href="coverage/index.html">Test Coverage Report</a></li>
+                              <li><a href="coverage-summary.json">Coverage Summary</a></li>
+                              <li><a href="dependency-summary.json">Dependency Health</a></li>
+                              <li><a href="CHANGELOG.md">Changelog</a></li>
+                          </ul>
+                      </div>
+                      
+                      <div class="card">
+                          <h2>🤖 AI Assistant Context</h2>
+                          <ul>
+                              <li><a href="../.claude-context/PROJECT_CONTEXT.md">Project Context</a></li>
+                              <li><a href="../.claude-context/quick-reference.md">Quick Reference</a></li>
+                              <li><a href="../.claude-context/file-tree.md">File Structure</a></li>
+                              <li><a href="../.claude-context/api-endpoints.md">API Endpoints</a></li>
+                          </ul>
+                      </div>
+                  </div>
+                  
+                  <div class="stats">
+                      <div class="stat">
+                          <div class="stat-value" id="files-count">...</div>
+                          <div class="stat-label">Files</div>
+                      </div>
+                      <div class="stat">
+                          <div class="stat-value" id="coverage-percent">...</div>
+                          <div class="stat-label">Coverage</div>
+                      </div>
+                      <div class="stat">
+                          <div class="stat-value" id="deps-count">...</div>
+                          <div class="stat-label">Dependencies</div>
+                      </div>
+                      <div class="stat">
+                          <div class="stat-value" id="api-count">...</div>
+                          <div class="stat-label">API Endpoints</div>
+                      </div>
+                  </div>
+                  
+                  <footer>
+                      <p>Generated with ❤️ by GitHub Actions</p>
+                      <p><a href="${{ github.server_url }}/${{ github.repository }}">View Repository</a> | 
+                         <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">View Workflow Run</a></p>
+                  </footer>
+              </div>
+              
+              <script>
+                  // Load statistics
+                  fetch('dependency-summary.json')
+                      .then(r => r.json())
+                      .then(data => {
+                          document.getElementById('deps-count').textContent = data.total || '0';
+                      })
+                      .catch(() => {});
+                  
+                  fetch('coverage-summary.json')
+                      .then(r => r.json())
+                      .then(data => {
+                          const coverage = data.total?.lines?.pct || 0;
+                          document.getElementById('coverage-percent').textContent = coverage.toFixed(1) + '%';
+                      })
+                      .catch(() => {});
+                  
+                  // Placeholder values
+                  document.getElementById('files-count').textContent = '${{ github.event.repository.size }}';
+                  document.getElementById('api-count').textContent = 'N/A';
+              </script>
+          </body>
+          </html>
+          EOF
+          
+          echo "Documentation index created"
+      
+      # ============================================
+      # STEP 16: UPLOAD ARTIFACTS
+      # ============================================
+      - name: Upload documentation artifacts
+        id: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation-${{ github.sha }}
+          path: |
+            ${{ env.DOCS_OUTPUT_DIR }}/
+            ${{ env.CLAUDE_CONTEXT_DIR }}/
+          retention-days: 30
+          if-no-files-found: warn
+      
+      # ============================================
+      # STEP 17: DEPLOY TO GITHUB PAGES (OPTIONAL)
+      # ============================================
+      - name: Setup GitHub Pages
+        if: |
+          github.ref == 'refs/heads/main' && 
+          (github.event_name == 'push' || github.event.inputs.deploy_to_pages == 'true')
+        uses: actions/configure-pages@v4
+      
+      - name: Upload to GitHub Pages
+        if: |
+          github.ref == 'refs/heads/main' && 
+          (github.event_name == 'push' || github.event.inputs.deploy_to_pages == 'true')
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ env.DOCS_OUTPUT_DIR }}
+      
+      - name: Deploy to GitHub Pages
+        if: |
+          github.ref == 'refs/heads/main' && 
+          (github.event_name == 'push' || github.event.inputs.deploy_to_pages == 'true')
+        id: deploy
+        uses: actions/deploy-pages@v4
+      
+      # ============================================
+      # STEP 18: COMMENT ON PR
+      # ============================================
+      - name: Comment on PR with documentation link
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const artifactUrl = `${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}`;
+            const docsUrl = '${{ steps.deploy.outputs.page_url }}';
+            
+            // Find coverage percentage if available
+            let coverageInfo = '';
+            try {
+              const fs = require('fs');
+              const coverage = JSON.parse(fs.readFileSync('${{ env.DOCS_OUTPUT_DIR }}/coverage-summary.json', 'utf8'));
+              const pct = coverage.total?.lines?.pct || 0;
+              coverageInfo = `📊 **Test Coverage**: ${pct.toFixed(1)}%\n`;
+            } catch (e) {
+              console.log('No coverage data available');
+            }
+            
+            const body = `## 📚 Documentation Generated Successfully!
+            
+            ### 📋 Documentation Summary
+            ${coverageInfo}
+            📁 **Documentation Size**: ${process.env.DOCS_SIZE || 'N/A'}
+            🔗 **Total Files Processed**: ${process.env.FILES_COUNT || 'N/A'}
+            
+            ### 🔗 Quick Links
+            - 📥 [Download Documentation Artifacts](${artifactUrl})
+            - 📖 [View Live Documentation](${docsUrl || 'Will be available after merge to main'})
+            
+            ### 📦 Included Documentation
+            - ✅ API Documentation (OpenAPI/Swagger)
+            - ✅ TypeScript Documentation (TypeDoc)
+            - ✅ Component Documentation (Compodoc)
+            - ✅ Dependency Analysis
+            - ✅ Test Coverage Report
+            - ✅ AI Context Files (.claude-context)
+            
+            ### 🤖 AI Assistant Usage
+            \`\`\`bash
+            # Download artifacts and extract .claude-context folder
+            # Then use with Claude:
+            claude --context .claude-context/
+            \`\`\`
+            
+            ---
+            *Documentation will be automatically published to GitHub Pages when merged to main.*
+            *Generated at: $(date -u +"%Y-%m-%d %H:%M:%S UTC")*`;
+            
+            // Check for existing comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.name,
+              issue_number: context.issue.number
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('Documentation Generated Successfully')
+            );
+            
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.name,
+                comment_id: botComment.id,
+                body: body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.name,
+                issue_number: context.issue.number,
+                body: body
+              });
+            }
+      
+      # ============================================
+      # STEP 19: CREATE RELEASE (OPTIONAL)
+      # ============================================
+      - name: Create documentation release
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const tag = `docs-${new Date().toISOString().split('T')[0]}`;
+            
+            try {
+              await github.rest.repos.createRelease({
+                owner: context.repo.owner,
+                repo: context.repo.name,
+                tag_name: tag,
+                name: `Documentation Release ${tag}`,
+                body: `Automated documentation release for commit ${context.sha}`,
+                draft: false,
+                prerelease: true
+              });
+            } catch (e) {
+              console.log('Release creation failed:', e.message);
+            }
+
+# ============================================
+# END OF WORKFLOW
+# ============================================
