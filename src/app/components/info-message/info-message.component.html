@@ -1,0 +1,9 @@
+<div class="info-message" [ngClass]="{'info-message--hidden': hidden}">
+  <div class="info-message__content">
+    <mat-icon svgIcon="pointer" class="info-message__content__pointer"></mat-icon>
+    <mat-icon svgIcon="pointer-cursor" class="info-message__content__pointer-cursor"></mat-icon>
+    <span class="info-message__text">
+      <ng-content></ng-content>
+    </span>
+  </div>
+</div>

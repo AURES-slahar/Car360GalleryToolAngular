@@ -1,0 +1,24 @@
+@import "scss/var.scss";
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: rgb(var(--white-color));
+  font-family: "Open Sans", arial, sans-serif;
+  font-size: 14px;
+  color: rgb(var(--text-color));
+  line-height: 24px;
+  @import "scss/components/canvas";
+  &.dark {
+    background-color: rgb(var(--black-color));
+  }
+}
+
+* {
+  user-select: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}

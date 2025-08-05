@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Driverama 360 demo</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+      }
+      @keyframes animate {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
+
+        50% {
+          opacity: 0.2;
+        }
+
+        100% {
+          opacity: 0;
+          transform: scale(1.4);
+        }
+      }
+
+      .hotspots {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        pointer-events: none;
+      }
+
+      .hotspots > div {
+        width: 48px;
+        height: 48px;
+        position: absolute;
+        top: -24px;
+        left: -24px;
+        border-radius: 100%;
+
+        will-change: transform;
+
+        border: 1px solid #ffda7f;
+      }
+
+      .hotspots > div:before,
+      .hotspots > div:after {
+        content: '';
+        position: absolute;
+        border-radius: 100%;
+
+        background: #ffc72c;
+        opacity: 0.4;
+      }
+
+      .hotspots > div:before {
+        background: #ffc72c;
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+        opacity: 0.4;
+      }
+
+      .hotspots > div:after {
+        border: 1px solid #ffda7f;
+        top: 16px;
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+      }
+
+      .hotspots > div span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        background: #ffc72c;
+        border-radius: 100%;
+
+        animation: animate 1s;
+        animation-iteration-count: infinite;
+        animation-direction: normal;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas />
+    <div class="hotspots">
+      <div data-x="0" data-y="0" data-z="-30">
+        <span />
+      </div>
+
+      <div data-x="15" data-y="0" data-z="-30">
+        <span />
+      </div>
+    </div>
+    <script type="module">
+      import { loadManifest } from './index.ts'
+
+      if (module.hot) {
+        module.hot.accept(function () {
+          window.location.reload()
+        })
+      }
+
+      const urlSearchParams = new URLSearchParams(window.location.search)
+      const params = Object.fromEntries(urlSearchParams.entries())
+
+      const id = params.id || window.prompt('Enter ID')
+      const method =
+        params.method ||
+        window
+          .prompt(`Enter method ("exterior" or "interior")`)
+          ?.toLocaleLowerCase() ||
+        'exterior'
+
+      loadManifest(`https://cdn-360-dev-driverama.azureedge.net/public/${id}`, {
+        canvas: document.querySelector('canvas'),
+        type: method
+      })
+    </script>
+  </body>
+</html>

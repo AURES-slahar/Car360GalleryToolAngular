@@ -1,0 +1,29 @@
+.controls {
+  background-color: rgb(var(--white-color));
+  overflow: hidden;
+  transition: all var(--transition);
+  transform: translateX(-50%);
+  border-radius: var(--border-radius);
+  box-shadow: 0 1px 3px rgba(var(--black-color), 0.3);
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  z-index: 1000;
+  &.controls--hidden {
+    display: none;
+  }
+  &.controls--mobile {
+    background-color: transparent;
+    transform: none;
+    padding: 0 18px;
+    border-radius: 0;
+    box-shadow: none;
+    justify-content: center;
+    gap: 8px;
+    right: 0;
+    bottom: 12px;
+    left: 0;
+  }
+}

@@ -1,0 +1,9 @@
+.canvas {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  z-index: 10;
+  &.canvas--active:not(.canvas--mobile) {
+    cursor: none;
+  }
+}

@@ -1,0 +1,26 @@
+<app-loader [light]="isFullScreen" [mobile]="mobile" *ngIf="loading"></app-loader>
+
+<app-main (touched)="hideMessage()">
+  <app-close [mobile]="mobile" (clicked)="closeFullscreen()" *ngIf="isFullScreen && !customControls"></app-close>
+
+  <app-info-message [hidden]="!message" *ngIf="!loading && !isFullScreen && !preload">
+    <ng-container *ngIf="lang == 'pl'">Obróć samochód</ng-container>
+    <ng-container *ngIf="lang == 'sk'">Otočiť auto</ng-container>
+    <ng-container *ngIf="lang != 'pl' && lang != 'sk'">Otočit auto</ng-container>
+  </app-info-message>
+
+  <div class="canvas" [ngClass]="{'canvas--active': !message, 'canvas--mobile': mobile}" #canvasDiv (mousemove)="canvasMouseMove($event)" (mouseout)="canvasMouseOut()" (mousedown)="canvasMouseDown()" (mouseup)="canvasMouseUp()" *ngIf="!preload"></div>
+
+  <app-preload [id]="id" [size]="preloadSize" *ngIf="props.type == 'exterior'"></app-preload>
+  <app-cursor [position]="cursorPosition" [move]="cursorMove" [active]="cursorActive" [hidden]="message" [mobile]="mobile" [horizontal]="props.type == 'exterior'" [responsive]="responsive" *ngIf="!loading && !preload"></app-cursor>
+
+  <app-controls [hidden]="!buttons" [mobile]="mobile" *ngIf="!customControls">
+    <app-controls-button [icon]="'eye'" (clicked)="changeType('exterior')" *ngIf="props.type != 'exterior'">{{ lang == 'pl' ? 'Zewnętrzny' : 'Exteriér' }}</app-controls-button>
+    <app-controls-button [icon]="'eye'" (clicked)="changeType('interior')" *ngIf="props.type != 'interior' && hasInterior">{{ lang == 'pl' ? 'Wnętrze' : 'Interiér' }}</app-controls-button>
+    <app-controls-button [icon]="'minus'" (clicked)="zoomOut()" *ngIf="isFullScreen"></app-controls-button>
+    <app-controls-button [icon]="'plus'" (clicked)="zoomIn()" *ngIf="isFullScreen"></app-controls-button>
+    <app-controls-button [icon]="'expand'" [align]="'right'" (clicked)="openFullscreen()" *ngIf="!isFullScreen">
+      <ng-container *ngIf="!mobile">{{ lang == 'pl' ? 'Pełny ekran' : 'Celá obrazovka' }}</ng-container>
+    </app-controls-button>
+  </app-controls>
+</app-main>

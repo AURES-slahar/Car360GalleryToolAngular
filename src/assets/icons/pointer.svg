@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="285" height="231" viewBox="0 0 285 231">
+  <defs>
+    <filter id="pointerShadow" x="0" y="0" width="285" height="231" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="28" result="blur"/>
+      <feFlood flood-opacity="0.647"/>
+      <feComposite operator="in" in2="blur"/>
+    </filter>
+  </defs>
+  <g transform="translate(-816.521 -263.998)">
+    <g transform="matrix(1, 0, 0, 1, 816.52, 264)" filter="url(#pointerShadow)">
+      <rect width="117" height="63" rx="31.5" transform="translate(84 84)" fill="#fff"/>
+    </g>
+    <path d="M21.99,7.99a1,1,0,0,0-.7,1.717L25.586,14H14a1,1,0,1,0,0,2H25.586l-4.293,4.293a1,1,0,1,0,1.414,1.414l5.912-5.912a1,1,0,0,0,0-1.592l-5.91-5.91A1,1,0,0,0,21.99,7.99ZM2,14a1,1,0,1,0,1,1A1,1,0,0,0,2,14Zm4,0a1,1,0,1,0,1,1A1,1,0,0,0,6,14Zm4,0a1,1,0,1,0,1,1A1,1,0,0,0,10,14Z" transform="translate(978 346.008)" fill="#fff"/>
+    <path d="M8.022,7.99a1,1,0,0,1,.7,1.717L4.427,14H16.013a1,1,0,1,1,0,2H4.427L8.72,20.293a1,1,0,1,1-1.414,1.414L1.394,15.795a1,1,0,0,1,0-1.592l5.91-5.91A1,1,0,0,1,8.022,7.99ZM28.013,14a1,1,0,1,1-1,1A1,1,0,0,1,28.013,14Zm-4,0a1,1,0,1,1-1,1A1,1,0,0,1,24.013,14Zm-4,0a1,1,0,1,1-1,1A1,1,0,0,1,20.013,14Z" transform="translate(907.03 346.008)" fill="#fff"/>
+  </g>
+</svg>

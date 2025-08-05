@@ -1,0 +1,48 @@
+.controls-button {
+  cursor: pointer;
+  background-color: transparent;
+  height: 38px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all var(--transition);
+  padding: 8px 24px;
+  border: 0 none transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  &:hover {
+    color: rgb(var(--primary-alt-color));
+  }
+  &:active {
+    color: rgb(var(--primary-color));
+  }
+  &.controls-button--mobile {
+    background-color: rgba(var(--black-color), 0.25);
+    height: 35px;
+    color: rgb(var(--white-color));
+    border: 0 none transparent !important;
+    border-radius: 18px;
+    text-transform: none;
+    padding: 0 16px;
+    &:hover, &:active {
+      background-color: rgba(var(--black-color), 0.35);
+      color: rgb(var(--white-color));
+    }
+  }
+  .controls-button__icon {
+    height: 20px;
+  }
+}
+
+:host {
+  &:not(:first-of-type) {
+    .controls-button:not(.controls-button--mobile) {
+      border-left: 1px solid rgb(var(--border-color));
+    }
+  }
+  &:has(.controls-button--right) {
+    margin-left: auto;
+  }
+}

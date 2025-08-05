@@ -1,0 +1,6 @@
+<button class="controls-button" type="button" (click)="click()" [ngClass]="{'controls-button--right': align == 'right', 'controls-button--mobile': controlsComponent.mobile}">
+  @if (icon) {
+    <mat-icon class="controls-button__icon" [svgIcon]="icon"></mat-icon>
+  }
+  <ng-content></ng-content>
+</button>
