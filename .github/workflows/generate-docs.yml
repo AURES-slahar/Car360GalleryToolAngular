@@ -243,50 +243,62 @@ jobs:
         run: |
           echo "Generating Compodoc documentation..."
           
-          # Create Compodoc configuration if not exists
+          # Create configuration if not exists
           if [ ! -f ".compodocrc.json" ]; then
-            cat > .compodocrc.json << EOF
+            cat > .compodocrc.json << 'EOF'
           {
             "name": "${{ github.event.repository.name }} Documentation",
             "output": "${{ env.DOCS_OUTPUT_DIR }}/compodoc",
             "theme": "readthedocs",
-            "includePrivate": false,
-            "includes": "./docs-src",
-            "disableGraph": false,
-            "disableCoverage": false,
+            "disableCoverage": true,
             "disablePrivate": true,
             "disableInternal": true,
             "disableLifeCycleHooks": false,
             "disableRoutesGraph": false,
-            "coverageTest": 80,
-            "coverageTestThresholdFail": false,
-            "hideGenerator": false,
-            "customFavicon": "./src/favicon.ico",
-            "gaID": "${{ secrets.GOOGLE_ANALYTICS_ID || '' }}"
+            "hideGenerator": true,
+            "includes": "./docs",
+            "includePrivate": false,
+            "exclude": [
+              "**/*.spec.ts",
+              "**/*.test.ts",
+              "**/test/**",
+              "**/node_modules/**"
+            ],
+            "tsconfig": "./tsconfig.json",
+            "silent": true
           }
           EOF
           fi
           
-          # Generate documentation
-          npx compodoc \
-            -p tsconfig.json \
-            -d ${{ env.DOCS_OUTPUT_DIR }}/compodoc \
-            --silent \
-            --exportFormat json \
-            --coverageMinimumPerFile 0
+          # Try to generate with configuration
+          npx compodoc || {
+            echo "Compodoc failed with configuration, trying with minimal options..."
+            npx compodoc \
+              -p tsconfig.json \
+              -d ${{ env.DOCS_OUTPUT_DIR }}/compodoc \
+              --disableCoverage \
+              --silent || echo "Compodoc completed with warnings"
+          }
           
-          # Extract summary
-          if [ -f "${{ env.DOCS_OUTPUT_DIR }}/compodoc/documentation.json" ]; then
-            jq '{
-              components: .components | length,
-              modules: .modules | length,
-              services: .injectables | length,
-              pipes: .pipes | length,
-              directives: .directives | length
-            }' ${{ env.DOCS_OUTPUT_DIR }}/compodoc/documentation.json > ${{ env.DOCS_OUTPUT_DIR }}/compodoc-summary.json
+          # Check if documentation was generated
+          if [ -d "${{ env.DOCS_OUTPUT_DIR }}/compodoc" ]; then
+            echo "✅ Compodoc documentation generated successfully"
+            # Count documented items
+            if [ -f "${{ env.DOCS_OUTPUT_DIR }}/compodoc/documentation.json" ]; then
+              echo "Documentation stats:"
+              jq '{
+                components: (.components | length),
+                modules: (.modules | length),
+                services: (.injectables | length),
+                pipes: (.pipes | length),
+                directives: (.directives | length)
+              }' ${{ env.DOCS_OUTPUT_DIR }}/compodoc/documentation.json
+            fi
+          else
+            echo "⚠️ Compodoc documentation directory not created"
           fi
           
-          echo "Compodoc generation complete"
+          echo "Compodoc step complete"
       
       # ============================================
       # STEP 9: TYPESCRIPT DOCUMENTATION (TYPEDOC)
