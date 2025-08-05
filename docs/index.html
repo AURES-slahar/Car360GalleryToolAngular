@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car360GalleryToolAngular - Documentation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        header {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        .meta {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        .card h2 {
+            color: #764ba2;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        .card ul {
+            list-style: none;
+        }
+        .card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        .card li:last-child {
+            border-bottom: none;
+        }
+        .card a {
+            color: #667eea;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        .card a:hover {
+            color: #764ba2;
+        }
+        .card a::before {
+            content: '📄';
+            margin-right: 0.5rem;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .stat {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 5px;
+            padding: 1rem;
+            text-align: center;
+            color: white;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            color: white;
+            opacity: 0.9;
+        }
+        footer a {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Car360GalleryToolAngular Documentation</h1>
+            <div class="meta">
+                <p>📅 Generated: 2025-08-05 23:45:36 UTC</p>
+                <p>🔧 Branch: main</p>
+                <p>📦 Commit: 9720596675b3bcb5c09db0579dac22ca0e0281a7</p>
+            </div>
+        </header>
+        
+        <div class="grid">
+            <div class="card">
+                <h2>📖 API Documentation</h2>
+                <ul>
+                    <li><a href="api/index.html">OpenAPI/Swagger Documentation</a></li>
+                    <li><a href="api/postman-collection.json">Postman Collection</a></li>
+                    <li><a href="compodoc/index.html">Component Documentation (Compodoc)</a></li>
+                    <li><a href="typedoc/index.html">TypeScript Documentation</a></li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h2>📊 Code Analysis</h2>
+                <ul>
+                    <li><a href="assets/dependency-graph.svg">Dependency Graph</a></li>
+                    <li><a href="dependency-report.html">Dependency Report</a></li>
+                    <li><a href="circular-dependencies.json">Circular Dependencies</a></li>
+                    <li><a href="npm-dependencies.json">NPM Dependencies List</a></li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h2>🧪 Testing & Quality</h2>
+                <ul>
+                    <li><a href="coverage/index.html">Test Coverage Report</a></li>
+                    <li><a href="coverage-summary.json">Coverage Summary</a></li>
+                    <li><a href="dependency-summary.json">Dependency Health</a></li>
+                    <li><a href="CHANGELOG.md">Changelog</a></li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h2>🤖 AI Assistant Context</h2>
+                <ul>
+                    <li><a href="PROJECT_CONTEXT.md">Project Context</a></li>
+                    <li><a href="quick-reference.md">Quick Reference</a></li>
+                    <li><a href="file-tree.md">File Structure</a></li>
+                    <li><a href="api-endpoints.md">API Endpoints</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value" id="files-count">...</div>
+                <div class="stat-label">Files</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="coverage-percent">...</div>
+                <div class="stat-label">Coverage</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="deps-count">...</div>
+                <div class="stat-label">Dependencies</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="api-count">...</div>
+                <div class="stat-label">API Endpoints</div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Generated with ❤️ by GitHub Actions</p>
+            <p><a href="https://github.com/AURES-slahar/Car360GalleryToolAngular">View Repository</a> | 
+               <a href="https://github.com/AURES-slahar/Car360GalleryToolAngular/actions/runs/16763798597">View Workflow Run</a></p>
+        </footer>
+    </div>
+    
+    <script>
+        // Load statistics
+        fetch('dependency-summary.json')
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('deps-count').textContent = data.total || '0';
+            })
+            .catch(() => {});
+        
+        fetch('coverage-summary.json')
+            .then(r => r.json())
+            .then(data => {
+                const coverage = data.total?.lines?.pct || 0;
+                document.getElementById('coverage-percent').textContent = coverage.toFixed(1) + '%';
+            })
+            .catch(() => {});
+        
+        // Placeholder values
+        document.getElementById('files-count').textContent = '235';
+        document.getElementById('api-count').textContent = 'N/A';
+    </script>
+</body>
+</html>

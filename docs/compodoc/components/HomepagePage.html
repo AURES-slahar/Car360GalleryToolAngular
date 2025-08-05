@@ -1,0 +1,2253 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Car360GalleryToolAngular Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/readthedocs.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Car360GalleryToolAngular Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  HomepagePage</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/homepage/homepage.page.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+                <code>AfterViewInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-homepage</code></td>
+            </tr>
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./homepage.page.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#buttons" >buttons</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Optional</span>
+                                <a href="#canvasDiv" >canvasDiv</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#cursorActive" >cursorActive</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#cursorMove" >cursorMove</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#cursorPosition" >cursorPosition</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#customControls" >customControls</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#defaultSize" >defaultSize</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#elem" >elem</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#hasInterior" >hasInterior</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#id" >id</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isFullScreen" >isFullScreen</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#lang" >lang</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#loading" >loading</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#message" >message</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#mobile" >mobile</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#preload" >preload</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#preloadSize" >preloadSize</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#props" >props</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#renderer360" >renderer360</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#responsive" >responsive</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#size" >size</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#webType" >webType</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#canvasMouseDown" >canvasMouseDown</a>
+                            </li>
+                            <li>
+                                <a href="#canvasMouseMove" >canvasMouseMove</a>
+                            </li>
+                            <li>
+                                <a href="#canvasMouseOut" >canvasMouseOut</a>
+                            </li>
+                            <li>
+                                <a href="#canvasMouseUp" >canvasMouseUp</a>
+                            </li>
+                            <li>
+                                <a href="#changeSize" >changeSize</a>
+                            </li>
+                            <li>
+                                <a href="#changeType" >changeType</a>
+                            </li>
+                            <li>
+                                <a href="#closeFullscreen" >closeFullscreen</a>
+                            </li>
+                            <li>
+                                <a href="#hideMessage" >hideMessage</a>
+                            </li>
+                            <li>
+                                <a href="#initCanvas" >initCanvas</a>
+                            </li>
+                            <li>
+                                <a href="#ngAfterViewInit" >ngAfterViewInit</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#onResize" >onResize</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#onRightClick" >onRightClick</a>
+                            </li>
+                            <li>
+                                <a href="#openFullscreen" >openFullscreen</a>
+                            </li>
+                            <li>
+                                <a href="#zoomIn" >zoomIn</a>
+                            </li>
+                            <li>
+                                <a href="#zoomOut" >zoomOut</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>HostListeners</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#contextmenu" >contextmenu</a>
+                            </li>
+                            <li>
+                                <a href="#window:resize" >window:resize</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(renderer: <a href="../undefineds/Renderer.html" target="_self">Renderer2</a>, route: ActivatedRoute)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="140" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:140</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>renderer</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../miscellaneous/functions.html#Renderer" target="_self" >Renderer2</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>route</td>
+                                                  
+                                                        <td>
+                                                                    <code>ActivatedRoute</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+    <section data-compodoc="block-methods">
+    <h3>HostListeners</h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="contextmenu"></a>
+                    <span class="name">
+                        <span ><b>contextmenu</b></span>
+                        <a href="#contextmenu"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <i>Arguments : </i><code>'$event' </code>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>contextmenu(event: MouseEvent)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="40"
+                                    class="link-to-prism">src/app/pages/homepage/homepage.page.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="window:resize"></a>
+                    <span class="name">
+                        <span ><b>window:resize</b></span>
+                        <a href="#window:resize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <i>Arguments : </i><code>'$event' </code>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>window:resize()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="44"
+                                    class="link-to-prism">src/app/pages/homepage/homepage.page.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canvasMouseDown"></a>
+                    <span class="name">
+                        <span ><b>canvasMouseDown</b></span>
+                        <a href="#canvasMouseDown"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>canvasMouseDown()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="74"
+                                    class="link-to-prism">src/app/pages/homepage/homepage.page.ts:74</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canvasMouseMove"></a>
+                    <span class="name">
+                        <span ><b>canvasMouseMove</b></span>
+                        <a href="#canvasMouseMove"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>canvasMouseMove(event: MouseEvent)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="64"
+                                    class="link-to-prism">src/app/pages/homepage/homepage.page.ts:64</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>MouseEvent</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canvasMouseOut"></a>
+                    <span class="name">
+                        <span ><b>canvasMouseOut</b></span>
+                        <a href="#canvasMouseOut"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>canvasMouseOut()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="69"
+                                    class="link-to-prism">src/app/pages/homepage/homepage.page.ts:69</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canvasMouseUp"></a>
+                    <span class="name">
+                        <span ><b>canvasMouseUp</b></span>
+                        <a href="#canvasMouseUp"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>canvasMouseUp()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="78"
+                                    class="link-to-prism">src/app/pages/homepage/homepage.page.ts:78</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="changeSize"></a>
+                    <span class="name">
+                        <span ><b>changeSize</b></span>
+                        <a href="#changeSize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>changeSize()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="110"
+                                    class="link-to-prism">src/app/pages/homepage/homepage.page.ts:110</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="changeType"></a>
+                    <span class="name">
+                        <span ><b>changeType</b></span>
+                        <a href="#changeType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>changeType(type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="48"
+                                    class="link-to-prism">src/app/pages/homepage/homepage.page.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeFullscreen"></a>
+                    <span class="name">
+                        <span ><b>closeFullscreen</b></span>
+                        <a href="#closeFullscreen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeFullscreen()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="138"
+                                    class="link-to-prism">src/app/pages/homepage/homepage.page.ts:138</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hideMessage"></a>
+                    <span class="name">
+                        <span ><b>hideMessage</b></span>
+                        <a href="#hideMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>hideMessage()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="129"
+                                    class="link-to-prism">src/app/pages/homepage/homepage.page.ts:129</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initCanvas"></a>
+                    <span class="name">
+                        <span ><b>initCanvas</b></span>
+                        <a href="#initCanvas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>initCanvas()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="82"
+                                    class="link-to-prism">src/app/pages/homepage/homepage.page.ts:82</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewInit"></a>
+                    <span class="name">
+                        <span ><b>ngAfterViewInit</b></span>
+                        <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngAfterViewInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="176"
+                                    class="link-to-prism">src/app/pages/homepage/homepage.page.ts:176</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="144"
+                                    class="link-to-prism">src/app/pages/homepage/homepage.page.ts:144</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onResize"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>onResize</b></span>
+                        <a href="#onResize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onResize()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@HostListener(&#x27;window:resize&#x27;, [&#x27;$event&#x27;])<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="44"
+                                    class="link-to-prism">src/app/pages/homepage/homepage.page.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onRightClick"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>onRightClick</b></span>
+                        <a href="#onRightClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onRightClick(event: MouseEvent)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@HostListener(&#x27;contextmenu&#x27;, [&#x27;$event&#x27;])<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="40"
+                                    class="link-to-prism">src/app/pages/homepage/homepage.page.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>MouseEvent</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openFullscreen"></a>
+                    <span class="name">
+                        <span ><b>openFullscreen</b></span>
+                        <a href="#openFullscreen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openFullscreen()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="134"
+                                    class="link-to-prism">src/app/pages/homepage/homepage.page.ts:134</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="zoomIn"></a>
+                    <span class="name">
+                        <span ><b>zoomIn</b></span>
+                        <a href="#zoomIn"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>zoomIn()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="54"
+                                    class="link-to-prism">src/app/pages/homepage/homepage.page.ts:54</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="zoomOut"></a>
+                    <span class="name">
+                        <span ><b>zoomOut</b></span>
+                        <a href="#zoomOut"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>zoomOut()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="59"
+                                    class="link-to-prism">src/app/pages/homepage/homepage.page.ts:59</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="buttons"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>buttons</b></span>
+                        <a href="#buttons"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canvasDiv"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Optional</span>
+                        <span ><b>canvasDiv</b></span>
+                        <a href="#canvasDiv"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ElementRef</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;canvasDiv&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:14</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cursorActive"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>cursorActive</b></span>
+                        <a href="#cursorActive"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cursorMove"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>cursorMove</b></span>
+                        <a href="#cursorMove"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cursorPosition"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>cursorPosition</b></span>
+                        <a href="#cursorPosition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;translateX(0px) translateY(0px)&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="customControls"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>customControls</b></span>
+                        <a href="#customControls"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.route.snapshot.queryParamMap.get(&#x27;custom-controls&#x27;) &#x3D;&#x3D;&#x3D; &#x27;true&#x27; ? true : false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:20</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="defaultSize"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>defaultSize</b></span>
+                        <a href="#defaultSize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.route.snapshot.queryParamMap.get(&#x27;mobile&#x27;) &#x3D;&#x3D;&#x3D; &#x27;contain&#x27; ? &#x27;contain&#x27; : &#x27;cover&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:19</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="elem"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>elem</b></span>
+                        <a href="#elem"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hasInterior"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>hasInterior</b></span>
+                        <a href="#hasInterior"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="id"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>id</b></span>
+                        <a href="#id"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.route.snapshot.queryParamMap.get(&#x27;id&#x27;) || &#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:15</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isFullScreen"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>isFullScreen</b></span>
+                        <a href="#isFullScreen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.route.snapshot.queryParamMap.get(&#x27;fullscreen&#x27;) &#x3D;&#x3D;&#x3D; &#x27;true&#x27; ? true : false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="lang"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>lang</b></span>
+                        <a href="#lang"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.route.snapshot.queryParamMap.get(&#x27;lang&#x27;) || &#x27;cs&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:16</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="message"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>message</b></span>
+                        <a href="#message"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mobile"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>mobile</b></span>
+                        <a href="#mobile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.route.snapshot.queryParamMap.get(&#x27;mobile&#x27;) &#x3D;&#x3D;&#x3D; &#x27;true&#x27; ? true : false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:17</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="preload"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>preload</b></span>
+                        <a href="#preload"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.route.snapshot.queryParamMap.get(&#x27;preload&#x27;) &#x3D;&#x3D;&#x3D; &#x27;true&#x27; ? true : false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="preloadSize"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>preloadSize</b></span>
+                        <a href="#preloadSize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>window.innerWidth / 3</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="props"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>props</b></span>
+                        <a href="#props"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    &#x27;url&#x27;: &#x27;https://cdn-360-dev-driverama.azureedge.net/public/&#x27; + this.id,
+    &#x27;type&#x27;: this.route.snapshot.queryParamMap.get(&#x27;type&#x27;) ? this.route.snapshot.queryParamMap.get(&#x27;type&#x27;) : &#x27;exterior&#x27;
+  }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:22</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="renderer360"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>renderer360</b></span>
+                        <a href="#renderer360"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="responsive"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>responsive</b></span>
+                        <a href="#responsive"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.route.snapshot.queryParamMap.get(&#x27;responsive&#x27;) &#x3D;&#x3D;&#x3D; &#x27;true&#x27; ? true : false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="size"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>size</b></span>
+                        <a href="#size"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.route.snapshot.queryParamMap.get(&#x27;mobile&#x27;) &#x3D;&#x3D;&#x3D; &#x27;contain&#x27; ? &#x27;contain&#x27; : &#x27;cover&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:18</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="webType"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>webType</b></span>
+                        <a href="#webType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.route.snapshot.queryParamMap.get(&#x27;web-type&#x27;) ?? &#x27;default&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/pages/homepage/homepage.page.ts:21</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, Renderer2, ViewChild, HostListener, ElementRef, OnInit, AfterViewInit, inject } from &#x27;@angular/core&#x27;;
+import { DOCUMENT } from &#x27;@angular/common&#x27;;
+import { ActivatedRoute } from &#x27;@angular/router&#x27;;
+
+import { createManifestRenderer, fetchManifest } from &#x27;../../../driverama-360-renderer&#x27;;
+
+@Component({
+  selector: &#x27;app-homepage&#x27;,
+  templateUrl: &#x27;./homepage.page.html&#x27;
+})
+
+export class HomepagePage implements OnInit, AfterViewInit {
+  private _doc &#x3D; inject&lt;Document&gt;(DOCUMENT);
+  @ViewChild(&#x27;canvasDiv&#x27;) canvasDiv?: ElementRef;
+  public id: string &#x3D; this.route.snapshot.queryParamMap.get(&#x27;id&#x27;) || &#x27;&#x27;; //900343408_1647603373
+  public lang: string &#x3D; this.route.snapshot.queryParamMap.get(&#x27;lang&#x27;) || &#x27;cs&#x27;;
+  public mobile: boolean &#x3D; this.route.snapshot.queryParamMap.get(&#x27;mobile&#x27;) &#x3D;&#x3D;&#x3D; &#x27;true&#x27; ? true : false;
+  public size: string &#x3D; this.route.snapshot.queryParamMap.get(&#x27;mobile&#x27;) &#x3D;&#x3D;&#x3D; &#x27;contain&#x27; ? &#x27;contain&#x27; : &#x27;cover&#x27;;
+  public defaultSize: string &#x3D; this.route.snapshot.queryParamMap.get(&#x27;mobile&#x27;) &#x3D;&#x3D;&#x3D; &#x27;contain&#x27; ? &#x27;contain&#x27; : &#x27;cover&#x27;;
+  public customControls: boolean &#x3D; this.route.snapshot.queryParamMap.get(&#x27;custom-controls&#x27;) &#x3D;&#x3D;&#x3D; &#x27;true&#x27; ? true : false;
+  public webType: string &#x3D; this.route.snapshot.queryParamMap.get(&#x27;web-type&#x27;) ?? &#x27;default&#x27;; // mototechna
+  public props: any &#x3D; {
+    &#x27;url&#x27;: &#x27;https://cdn-360-dev-driverama.azureedge.net/public/&#x27; + this.id,
+    &#x27;type&#x27;: this.route.snapshot.queryParamMap.get(&#x27;type&#x27;) ? this.route.snapshot.queryParamMap.get(&#x27;type&#x27;) : &#x27;exterior&#x27;
+  };
+  public renderer360: any;
+  public loading: boolean &#x3D; true;
+  public cursorPosition: any &#x3D; &#x27;translateX(0px) translateY(0px)&#x27;;
+  public cursorMove: boolean &#x3D; false;
+  public cursorActive: boolean &#x3D; false;
+  public message: boolean &#x3D; true;
+  public elem: any;
+  public isFullScreen: boolean &#x3D; this.route.snapshot.queryParamMap.get(&#x27;fullscreen&#x27;) &#x3D;&#x3D;&#x3D; &#x27;true&#x27; ? true : false;
+  public responsive: boolean &#x3D; this.route.snapshot.queryParamMap.get(&#x27;responsive&#x27;) &#x3D;&#x3D;&#x3D; &#x27;true&#x27; ? true : false;
+  public preload: boolean &#x3D; this.route.snapshot.queryParamMap.get(&#x27;preload&#x27;) &#x3D;&#x3D;&#x3D; &#x27;true&#x27; ? true : false;
+  public preloadSize: number &#x3D; window.innerWidth / 3;
+  public hasInterior: boolean &#x3D; false;
+  public buttons: boolean &#x3D; true;
+
+  @HostListener(&#x27;contextmenu&#x27;, [&#x27;$event&#x27;]) onRightClick(event: MouseEvent): void {
+    event.preventDefault();
+  }
+
+  @HostListener(&#x27;window:resize&#x27;, [&#x27;$event&#x27;]) onResize(): void {
+    this.changeSize();
+  }
+
+  changeType(type: string): void {
+    this.props.type &#x3D; type;
+    window.parent.postMessage({ message: &#x27;threesixtyType&#x27;, value: type }, &#x27;*&#x27;);
+    this.initCanvas();
+  }
+
+  zoomIn(): void {
+    this.renderer360.onZoomIn();
+    window.parent.postMessage({ message: &#x27;threesixtyZoomIn&#x27;, value: true }, &#x27;*&#x27;);
+  }
+
+  zoomOut(): void {
+    this.renderer360.onZoomOut();
+    window.parent.postMessage({ message: &#x27;threesixtyZoomOut&#x27;, value: true }, &#x27;*&#x27;);
+  }
+
+  canvasMouseMove(event: MouseEvent): void {
+    this.cursorPosition &#x3D; &#x27;translateX(&#x27; + event.clientX + &#x27;px) translateY(&#x27; + event.clientY + &#x27;px)&#x27;;
+    this.cursorMove &#x3D; true;
+  }
+
+  canvasMouseOut(): void {
+    this.cursorPosition &#x3D; &#x27;translateX(0px) translateY(0px)&#x27;;
+    this.cursorMove &#x3D; false;
+  }
+
+  canvasMouseDown(): void {
+    this.cursorActive &#x3D; true;
+  }
+
+  canvasMouseUp(): void {
+    this.cursorActive &#x3D; false;
+  }
+
+  initCanvas(): void {
+    if (!this.preload) {
+      this.renderer.setProperty(this.canvasDiv?.nativeElement, &#x27;innerHTML&#x27;, &#x27;&#x27;);
+      this.renderer360 &#x3D; createManifestRenderer({
+        container: this.canvasDiv?.nativeElement,
+        preload: true
+      });
+      this.loading &#x3D; true;
+      const abortController &#x3D; new AbortController();
+      fetchManifest(this.props.url, { signal: abortController.signal }).then(data &#x3D;&gt; {
+        this.hasInterior &#x3D; data.interior.length &gt; 0 ? true : false;
+        window.parent.postMessage({ message: &#x27;threesixtyLoaded&#x27;, value: true }, &#x27;*&#x27;);
+        window.parent.postMessage({ message: &#x27;threesixtyHasInterior&#x27;, value: this.hasInterior }, &#x27;*&#x27;);
+        return this.renderer360.init(
+          this.props.type,
+          data,
+          {
+            onActive: () &#x3D;&gt; { },
+            onZoomChange: (data: any) &#x3D;&gt; { }
+          },
+          { objectFit: this.size }
+        )
+      }).then(() &#x3D;&gt; {
+        this.loading &#x3D; false;
+      });
+    }
+  }
+
+  changeSize(): void {
+    const ratio: number &#x3D; 100 / (window.innerWidth / window.innerHeight);
+    let newSize: string;
+    if (ratio &lt; 30) {
+      newSize &#x3D; &#x27;contain&#x27;;
+      this.preloadSize &#x3D; window.innerHeight / 2;
+    } else if (ratio &gt; 84) {
+      newSize &#x3D; &#x27;contain&#x27;;
+      this.preloadSize &#x3D; window.innerWidth / 3;
+    } else {
+      newSize &#x3D; this.defaultSize;
+      this.preloadSize &#x3D; window.innerWidth / 3 &gt; window.innerHeight / 2 ? window.innerWidth / 3 : window.innerHeight / 2;
+    }
+    if (newSize !&#x3D; this.size) {
+      this.size &#x3D; newSize;
+      this.initCanvas();
+    }
+  }
+
+  hideMessage(): void {
+    this.message &#x3D; false;
+    window.parent.postMessage({ message: &#x27;threesixtyMove&#x27;, value: true }, &#x27;*&#x27;);
+  }
+
+  openFullscreen(): void {
+    window.parent.postMessage({ message: &#x27;threesixtyFullscreen&#x27;, value: true }, &#x27;*&#x27;);
+  }
+
+  closeFullscreen(): void {
+    window.parent.postMessage({ message: &#x27;threesixtyFullscreen&#x27;, value: false }, &#x27;*&#x27;);
+  }
+
+  constructor(private renderer: Renderer2, private route: ActivatedRoute) { }
+
+  ngOnInit(): void {
+    this.elem &#x3D; document.documentElement;
+    if (this.isFullScreen) this.renderer.addClass(document.body, &#x27;dark&#x27;);
+    this.renderer.addClass(this._doc.documentElement, &#x27;web-type--&#x27; + this.webType);
+
+    window.addEventListener(&#x27;message&#x27;, (event: any) &#x3D;&gt; {
+      if (event.data.message) {
+        if (event.data.message &#x3D;&#x3D; &#x27;buttons&#x27;) {
+          if (event.data.value &#x3D;&#x3D; &#x27;hide&#x27;) {
+            this.buttons &#x3D; false;
+          } else {
+            this.buttons &#x3D; true;
+          }
+        } else if (event.data.message &#x3D;&#x3D; &#x27;changeType&#x27;) {
+          this.changeType(event.data.value);
+        } else if (event.data.message &#x3D;&#x3D; &#x27;zoom&#x27;) {
+          if (event.data.value &#x3D;&#x3D; &#x27;in&#x27;) {
+            this.zoomIn();
+          } else {
+            this.zoomOut();
+          }
+        } else if (event.data.message &#x3D;&#x3D; &#x27;fullscreen&#x27;) {
+          if (event.data.value &#x3D;&#x3D; true) {
+            this.openFullscreen();
+          } else {
+            this.closeFullscreen();
+          }
+        }
+      }
+    }, false);
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() &#x3D;&gt; {
+      this.changeSize();
+      this.initCanvas();
+    });
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;app-loader [light]&#x3D;&quot;isFullScreen&quot; [mobile]&#x3D;&quot;mobile&quot; *ngIf&#x3D;&quot;loading&quot;&gt;&lt;/app-loader&gt;
+
+&lt;app-main (touched)&#x3D;&quot;hideMessage()&quot;&gt;
+  &lt;app-close [mobile]&#x3D;&quot;mobile&quot; (clicked)&#x3D;&quot;closeFullscreen()&quot; *ngIf&#x3D;&quot;isFullScreen &amp;&amp; !customControls&quot;&gt;&lt;/app-close&gt;
+
+  &lt;app-info-message [hidden]&#x3D;&quot;!message&quot; *ngIf&#x3D;&quot;!loading &amp;&amp; !isFullScreen &amp;&amp; !preload&quot;&gt;
+    &lt;ng-container *ngIf&#x3D;&quot;lang &#x3D;&#x3D; &#x27;pl&#x27;&quot;&gt;Obróć samochód&lt;/ng-container&gt;
+    &lt;ng-container *ngIf&#x3D;&quot;lang &#x3D;&#x3D; &#x27;sk&#x27;&quot;&gt;Otočiť auto&lt;/ng-container&gt;
+    &lt;ng-container *ngIf&#x3D;&quot;lang !&#x3D; &#x27;pl&#x27; &amp;&amp; lang !&#x3D; &#x27;sk&#x27;&quot;&gt;Otočit auto&lt;/ng-container&gt;
+  &lt;/app-info-message&gt;
+
+  &lt;div class&#x3D;&quot;canvas&quot; [ngClass]&#x3D;&quot;{&#x27;canvas--active&#x27;: !message, &#x27;canvas--mobile&#x27;: mobile}&quot; #canvasDiv (mousemove)&#x3D;&quot;canvasMouseMove($event)&quot; (mouseout)&#x3D;&quot;canvasMouseOut()&quot; (mousedown)&#x3D;&quot;canvasMouseDown()&quot; (mouseup)&#x3D;&quot;canvasMouseUp()&quot; *ngIf&#x3D;&quot;!preload&quot;&gt;&lt;/div&gt;
+
+  &lt;app-preload [id]&#x3D;&quot;id&quot; [size]&#x3D;&quot;preloadSize&quot; *ngIf&#x3D;&quot;props.type &#x3D;&#x3D; &#x27;exterior&#x27;&quot;&gt;&lt;/app-preload&gt;
+  &lt;app-cursor [position]&#x3D;&quot;cursorPosition&quot; [move]&#x3D;&quot;cursorMove&quot; [active]&#x3D;&quot;cursorActive&quot; [hidden]&#x3D;&quot;message&quot; [mobile]&#x3D;&quot;mobile&quot; [horizontal]&#x3D;&quot;props.type &#x3D;&#x3D; &#x27;exterior&#x27;&quot; [responsive]&#x3D;&quot;responsive&quot; *ngIf&#x3D;&quot;!loading &amp;&amp; !preload&quot;&gt;&lt;/app-cursor&gt;
+
+  &lt;app-controls [hidden]&#x3D;&quot;!buttons&quot; [mobile]&#x3D;&quot;mobile&quot; *ngIf&#x3D;&quot;!customControls&quot;&gt;
+    &lt;app-controls-button [icon]&#x3D;&quot;&#x27;eye&#x27;&quot; (clicked)&#x3D;&quot;changeType(&#x27;exterior&#x27;)&quot; *ngIf&#x3D;&quot;props.type !&#x3D; &#x27;exterior&#x27;&quot;&gt;{{ lang &#x3D;&#x3D; &#x27;pl&#x27; ? &#x27;Zewnętrzny&#x27; : &#x27;Exteriér&#x27; }}&lt;/app-controls-button&gt;
+    &lt;app-controls-button [icon]&#x3D;&quot;&#x27;eye&#x27;&quot; (clicked)&#x3D;&quot;changeType(&#x27;interior&#x27;)&quot; *ngIf&#x3D;&quot;props.type !&#x3D; &#x27;interior&#x27; &amp;&amp; hasInterior&quot;&gt;{{ lang &#x3D;&#x3D; &#x27;pl&#x27; ? &#x27;Wnętrze&#x27; : &#x27;Interiér&#x27; }}&lt;/app-controls-button&gt;
+    &lt;app-controls-button [icon]&#x3D;&quot;&#x27;minus&#x27;&quot; (clicked)&#x3D;&quot;zoomOut()&quot; *ngIf&#x3D;&quot;isFullScreen&quot;&gt;&lt;/app-controls-button&gt;
+    &lt;app-controls-button [icon]&#x3D;&quot;&#x27;plus&#x27;&quot; (clicked)&#x3D;&quot;zoomIn()&quot; *ngIf&#x3D;&quot;isFullScreen&quot;&gt;&lt;/app-controls-button&gt;
+    &lt;app-controls-button [icon]&#x3D;&quot;&#x27;expand&#x27;&quot; [align]&#x3D;&quot;&#x27;right&#x27;&quot; (clicked)&#x3D;&quot;openFullscreen()&quot; *ngIf&#x3D;&quot;!isFullScreen&quot;&gt;
+      &lt;ng-container *ngIf&#x3D;&quot;!mobile&quot;&gt;{{ lang &#x3D;&#x3D; &#x27;pl&#x27; ? &#x27;Pełny ekran&#x27; : &#x27;Celá obrazovka&#x27; }}&lt;/ng-container&gt;
+    &lt;/app-controls-button&gt;
+  &lt;/app-controls&gt;
+&lt;/app-main&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><app-loader [light]="isFullScreen" [mobile]="mobile" *ngIf="loading"></app-loader><app-main (touched)="hideMessage()">  <app-close [mobile]="mobile" (clicked)="closeFullscreen()" *ngIf="isFullScreen && !customControls"></app-close>  <app-info-message [hidden]="!message" *ngIf="!loading && !isFullScreen && !preload">    <ng-container *ngIf="lang == \'pl\'">Obróć samochód</ng-container>    <ng-container *ngIf="lang == \'sk\'">Otočiť auto</ng-container>    <ng-container *ngIf="lang != \'pl\' && lang != \'sk\'">Otočit auto</ng-container>  </app-info-message>  <div class="canvas" [ngClass]="{\'canvas--active\': !message, \'canvas--mobile\': mobile}" #canvasDiv (mousemove)="canvasMouseMove($event)" (mouseout)="canvasMouseOut()" (mousedown)="canvasMouseDown()" (mouseup)="canvasMouseUp()" *ngIf="!preload"></div>  <app-preload [id]="id" [size]="preloadSize" *ngIf="props.type == \'exterior\'"></app-preload>  <app-cursor [position]="cursorPosition" [move]="cursorMove" [active]="cursorActive" [hidden]="message" [mobile]="mobile" [horizontal]="props.type == \'exterior\'" [responsive]="responsive" *ngIf="!loading && !preload"></app-cursor>  <app-controls [hidden]="!buttons" [mobile]="mobile" *ngIf="!customControls">    <app-controls-button [icon]="\'eye\'" (clicked)="changeType(\'exterior\')" *ngIf="props.type != \'exterior\'">{{ lang == \'pl\' ? \'Zewnętrzny\' : \'Exteriér\' }}</app-controls-button>    <app-controls-button [icon]="\'eye\'" (clicked)="changeType(\'interior\')" *ngIf="props.type != \'interior\' && hasInterior">{{ lang == \'pl\' ? \'Wnętrze\' : \'Interiér\' }}</app-controls-button>    <app-controls-button [icon]="\'minus\'" (clicked)="zoomOut()" *ngIf="isFullScreen"></app-controls-button>    <app-controls-button [icon]="\'plus\'" (clicked)="zoomIn()" *ngIf="isFullScreen"></app-controls-button>    <app-controls-button [icon]="\'expand\'" [align]="\'right\'" (clicked)="openFullscreen()" *ngIf="!isFullScreen">      <ng-container *ngIf="!mobile">{{ lang == \'pl\' ? \'Pełny ekran\' : \'Celá obrazovka\' }}</ng-container>    </app-controls-button>  </app-controls></app-main></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CloseComponent', 'selector': 'app-close'},{'name': 'ControlsButtonComponent', 'selector': 'app-controls-button'},{'name': 'ControlsComponent', 'selector': 'app-controls'},{'name': 'CursorComponent', 'selector': 'app-cursor'},{'name': 'HomepagePage', 'selector': 'app-homepage'},{'name': 'InfoMessageComponent', 'selector': 'app-info-message'},{'name': 'LoaderComponent', 'selector': 'app-loader'},{'name': 'MainComponent', 'selector': 'app-main'},{'name': 'PageComponent', 'selector': 'app-page'},{'name': 'PreloadComponent', 'selector': 'app-preload'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'HomepagePage'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'HomepagePage.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

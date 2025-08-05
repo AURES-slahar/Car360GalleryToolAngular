@@ -1,0 +1,3649 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Car360GalleryToolAngular Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/readthedocs.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Car360GalleryToolAngular Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Classes</li>
+  <li class="breadcrumb-item" >InteriorControls</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/driverama-360-renderer/src/interior/InteriorControls.ts</code>
+        </p>
+
+
+
+            <p class="comment">
+                <h3>Extends</h3>
+            </p>
+            <p class="comment">
+                        <code>EventDispatcher</code>
+            </p>
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#addPointer" >addPointer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#autoRotate" >autoRotate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#autoRotateSpeed" >autoRotateSpeed</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#camera" >camera</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#dampingFactor" >dampingFactor</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#dampingZoomFactor" >dampingZoomFactor</a>
+                            </li>
+                            <li>
+                                <a href="#dispose" >dispose</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#dollyDelta" >dollyDelta</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#dollyEnd" >dollyEnd</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#dollyStart" >dollyStart</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#domElement" >domElement</a>
+                            </li>
+                            <li>
+                                <a href="#enabled" >enabled</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#enableDamping" >enableDamping</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#enableRotate" >enableRotate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#enableWheelZoom" >enableWheelZoom</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#enableZoom" >enableZoom</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#fov" >fov</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#fovEnd" >fovEnd</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#getAutoRotationAngle" >getAutoRotationAngle</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#getAzimuthalAngle" >getAzimuthalAngle</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#getDistance" >getDistance</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#getPolarAngle" >getPolarAngle</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#getSecondPointerPosition" >getSecondPointerPosition</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#getZoomScale" >getZoomScale</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#handleMouseDownRotate" >handleMouseDownRotate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#handleMouseMoveRotate" >handleMouseMoveRotate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#handleMouseUp" >handleMouseUp</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#handleMouseWheel" >handleMouseWheel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#handleTouchEnd" >handleTouchEnd</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#handleTouchMoveDolly" >handleTouchMoveDolly</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#handleTouchMoveDollyPan" >handleTouchMoveDollyPan</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#handleTouchMoveRotate" >handleTouchMoveRotate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#handleTouchStartDolly" >handleTouchStartDolly</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#handleTouchStartDollyPan" >handleTouchStartDollyPan</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#handleTouchStartRotate" >handleTouchStartRotate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#maxAzimuthAngle" >maxAzimuthAngle</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#maxDistance" >maxDistance</a>
+                            </li>
+                            <li>
+                                <a href="#maxFov" >maxFov</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#maxPolarAngle" >maxPolarAngle</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#minAzimuthAngle" >minAzimuthAngle</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#minDistance" >minDistance</a>
+                            </li>
+                            <li>
+                                <a href="#minFov" >minFov</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#minPolarAngle" >minPolarAngle</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#onContextMenu" >onContextMenu</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#onMouseDown" >onMouseDown</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#onMouseMove" >onMouseMove</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#onMouseUp" >onMouseUp</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#onMouseWheel" >onMouseWheel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#onPointerCancel" >onPointerCancel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#onPointerDown" >onPointerDown</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#onPointerMove" >onPointerMove</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#onPointerUp" >onPointerUp</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#onTouchEnd" >onTouchEnd</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#onTouchMove" >onTouchMove</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#onTouchStart" >onTouchStart</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#onZoomChange" >onZoomChange</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#panDelta" >panDelta</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#panEnd" >panEnd</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#panOffset" >panOffset</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#panStart" >panStart</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#pointerPositions" >pointerPositions</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#pointers" >pointers</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#position0" >position0</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#removePointer" >removePointer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#reset" >reset</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#rotateDelta" >rotateDelta</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#rotateEnd" >rotateEnd</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#rotateLeft" >rotateLeft</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#rotateSpeed" >rotateSpeed</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#rotateStart" >rotateStart</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#rotateUp" >rotateUp</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#saveState" >saveState</a>
+                            </li>
+                            <li>
+                                <a href="#setWheelEnabled" >setWheelEnabled</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#spherical" >spherical</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#sphericalDelta" >sphericalDelta</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#state" >state</a>
+                            </li>
+                            <li>
+                                <a href="#target" >target</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#target0" >target0</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#trackPointer" >trackPointer</a>
+                            </li>
+                            <li>
+                                <a href="#update" >update</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#zoomChanged" >zoomChanged</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#zoomDelta" >zoomDelta</a>
+                            </li>
+                            <li>
+                                <a href="#zoomIn" >zoomIn</a>
+                            </li>
+                            <li>
+                                <a href="#zoomOut" >zoomOut</a>
+                            </li>
+                            <li>
+                                <a href="#zoomReset" >zoomReset</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#zoomSpeed" >zoomSpeed</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(object: PerspectiveCamera, domElement: HTMLElement, onZoomChange: (data: literal type) => void)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="153" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:153</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>object</td>
+                                                  
+                                                        <td>
+                                                                    <code>PerspectiveCamera</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>domElement</td>
+                                                  
+                                                        <td>
+                                                                    <code>HTMLElement</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>onZoomChange</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addPointer"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>addPointer</b></span>
+                        <a href="#addPointer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="649" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:649</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="autoRotate"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>autoRotate</b></span>
+                        <a href="#autoRotate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:78</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="autoRotateSpeed"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>autoRotateSpeed</b></span>
+                        <a href="#autoRotateSpeed"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>2.0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:79</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="camera"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>camera</b></span>
+                        <a href="#camera"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>PerspectiveCamera</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:81</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dampingFactor"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>dampingFactor</b></span>
+                        <a href="#dampingFactor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0.05</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:63</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dampingZoomFactor"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>dampingZoomFactor</b></span>
+                        <a href="#dampingZoomFactor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0.25</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:64</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dispose"></a>
+                    <span class="name">
+                        <span ><b>dispose</b></span>
+                        <a href="#dispose"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="115" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:115</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dollyDelta"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>dollyDelta</b></span>
+                        <a href="#dollyDelta"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Vector2()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="106" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:106</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dollyEnd"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>dollyEnd</b></span>
+                        <a href="#dollyEnd"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Vector2()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="105" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:105</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dollyStart"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>dollyStart</b></span>
+                        <a href="#dollyStart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Vector2()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="104" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:104</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="domElement"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>domElement</b></span>
+                        <a href="#domElement"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>HTMLElement</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:82</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="enabled"></a>
+                    <span class="name">
+                        <span ><b>enabled</b></span>
+                        <a href="#enabled"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="enableDamping"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>enableDamping</b></span>
+                        <a href="#enableDamping"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:62</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="enableRotate"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>enableRotate</b></span>
+                        <a href="#enableRotate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:73</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="enableWheelZoom"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>enableWheelZoom</b></span>
+                        <a href="#enableWheelZoom"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:69</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="enableZoom"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>enableZoom</b></span>
+                        <a href="#enableZoom"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:68</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fov"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>fov</b></span>
+                        <a href="#fov"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fovEnd"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>fovEnd</b></span>
+                        <a href="#fovEnd"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAutoRotationAngle"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>getAutoRotationAngle</b></span>
+                        <a href="#getAutoRotationAngle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="332" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:332</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAzimuthalAngle"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>getAzimuthalAngle</b></span>
+                        <a href="#getAzimuthalAngle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="130" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:130</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDistance"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>getDistance</b></span>
+                        <a href="#getDistance"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="134" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:134</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPolarAngle"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>getPolarAngle</b></span>
+                        <a href="#getPolarAngle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="126" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:126</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSecondPointerPosition"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>getSecondPointerPosition</b></span>
+                        <a href="#getSecondPointerPosition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="675" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:675</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getZoomScale"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>getZoomScale</b></span>
+                        <a href="#getZoomScale"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="336" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:336</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleMouseDownRotate"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>handleMouseDownRotate</b></span>
+                        <a href="#handleMouseDownRotate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="384" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:384</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleMouseMoveRotate"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>handleMouseMoveRotate</b></span>
+                        <a href="#handleMouseMoveRotate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="388" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:388</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleMouseUp"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>handleMouseUp</b></span>
+                        <a href="#handleMouseUp"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="404" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:404</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleMouseWheel"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>handleMouseWheel</b></span>
+                        <a href="#handleMouseWheel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="408" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:408</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleTouchEnd"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>handleTouchEnd</b></span>
+                        <a href="#handleTouchEnd"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="484" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:484</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleTouchMoveDolly"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>handleTouchMoveDolly</b></span>
+                        <a href="#handleTouchMoveDolly"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="462" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:462</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleTouchMoveDollyPan"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>handleTouchMoveDollyPan</b></span>
+                        <a href="#handleTouchMoveDollyPan"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="480" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:480</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleTouchMoveRotate"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>handleTouchMoveRotate</b></span>
+                        <a href="#handleTouchMoveRotate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="437" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:437</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleTouchStartDolly"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>handleTouchStartDolly</b></span>
+                        <a href="#handleTouchStartDolly"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="424" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:424</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleTouchStartDollyPan"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>handleTouchStartDollyPan</b></span>
+                        <a href="#handleTouchStartDollyPan"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="433" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:433</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleTouchStartRotate"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>handleTouchStartRotate</b></span>
+                        <a href="#handleTouchStartRotate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="413" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:413</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="maxAzimuthAngle"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>maxAzimuthAngle</b></span>
+                        <a href="#maxAzimuthAngle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>Infinity</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="maxDistance"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>maxDistance</b></span>
+                        <a href="#maxDistance"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>Infinity</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="maxFov"></a>
+                    <span class="name">
+                        <span ><b>maxFov</b></span>
+                        <a href="#maxFov"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>100</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="maxPolarAngle"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>maxPolarAngle</b></span>
+                        <a href="#maxPolarAngle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>degToRad(102)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:53</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="minAzimuthAngle"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>minAzimuthAngle</b></span>
+                        <a href="#minAzimuthAngle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>-Infinity</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="minDistance"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>minDistance</b></span>
+                        <a href="#minDistance"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="minFov"></a>
+                    <span class="name">
+                        <span ><b>minFov</b></span>
+                        <a href="#minFov"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="minPolarAngle"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>minPolarAngle</b></span>
+                        <a href="#minPolarAngle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>degToRad(75)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:52</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onContextMenu"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>onContextMenu</b></span>
+                        <a href="#onContextMenu"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="644" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:644</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onMouseDown"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>onMouseDown</b></span>
+                        <a href="#onMouseDown"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="542" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:542</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onMouseMove"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>onMouseMove</b></span>
+                        <a href="#onMouseMove"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="549" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:549</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onMouseUp"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>onMouseUp</b></span>
+                        <a href="#onMouseUp"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="563" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:563</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onMouseWheel"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>onMouseWheel</b></span>
+                        <a href="#onMouseWheel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="569" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:569</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPointerCancel"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>onPointerCancel</b></span>
+                        <a href="#onPointerCancel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="538" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:538</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPointerDown"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>onPointerDown</b></span>
+                        <a href="#onPointerDown"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="491" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:491</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPointerMove"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>onPointerMove</b></span>
+                        <a href="#onPointerMove"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="510" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:510</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPointerUp"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>onPointerUp</b></span>
+                        <a href="#onPointerUp"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="520" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:520</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onTouchEnd"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>onTouchEnd</b></span>
+                        <a href="#onTouchEnd"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="638" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:638</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onTouchMove"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>onTouchMove</b></span>
+                        <a href="#onTouchMove"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="613" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:613</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onTouchStart"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>onTouchStart</b></span>
+                        <a href="#onTouchStart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="586" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:586</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onZoomChange"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>onZoomChange</b></span>
+                        <a href="#onZoomChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="111" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:111</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="panDelta"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>panDelta</b></span>
+                        <a href="#panDelta"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Vector2()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="102" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:102</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="panEnd"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>panEnd</b></span>
+                        <a href="#panEnd"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Vector2()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="101" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:101</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="panOffset"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>panOffset</b></span>
+                        <a href="#panOffset"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Vector3()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="93" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:93</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="panStart"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>panStart</b></span>
+                        <a href="#panStart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Vector2()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="100" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:100</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pointerPositions"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>pointerPositions</b></span>
+                        <a href="#pointerPositions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Record&lt;number | Vector2&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="109" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:109</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pointers"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>pointers</b></span>
+                        <a href="#pointers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>PointerEvent[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="108" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:108</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="position0"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>position0</b></span>
+                        <a href="#position0"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Vector3</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:85</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removePointer"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>removePointer</b></span>
+                        <a href="#removePointer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="653" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:653</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reset"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>reset</b></span>
+                        <a href="#reset"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="143" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:143</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rotateDelta"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>rotateDelta</b></span>
+                        <a href="#rotateDelta"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Vector2()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="98" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:98</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rotateEnd"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>rotateEnd</b></span>
+                        <a href="#rotateEnd"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Vector2()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="97" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:97</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rotateLeft"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>rotateLeft</b></span>
+                        <a href="#rotateLeft"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="340" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:340</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rotateSpeed"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>rotateSpeed</b></span>
+                        <a href="#rotateSpeed"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0.35</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:74</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rotateStart"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>rotateStart</b></span>
+                        <a href="#rotateStart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Vector2()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="96" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:96</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rotateUp"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>rotateUp</b></span>
+                        <a href="#rotateUp"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="344" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:344</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveState"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>saveState</b></span>
+                        <a href="#saveState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="138" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:138</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setWheelEnabled"></a>
+                    <span class="name">
+                        <span ><b>setWheelEnabled</b></span>
+                        <a href="#setWheelEnabled"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="684" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:684</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="spherical"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>spherical</b></span>
+                        <a href="#spherical"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Spherical()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:90</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sphericalDelta"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>sphericalDelta</b></span>
+                        <a href="#sphericalDelta"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Spherical()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="91" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:91</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="state"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>state</b></span>
+                        <a href="#state"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>STATE.NONE</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="87" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:87</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="target"></a>
+                    <span class="name">
+                        <span ><b>target</b></span>
+                        <a href="#target"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Vector3()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="target0"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>target0</b></span>
+                        <a href="#target0"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Vector3</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:84</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="trackPointer"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>trackPointer</b></span>
+                        <a href="#trackPointer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="664" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:664</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="update"></a>
+                    <span class="name">
+                        <span ><b>update</b></span>
+                        <a href="#update"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="113" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:113</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="zoomChanged"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>zoomChanged</b></span>
+                        <a href="#zoomChanged"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="94" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:94</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="zoomDelta"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>zoomDelta</b></span>
+                        <a href="#zoomDelta"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="348" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:348</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="zoomIn"></a>
+                    <span class="name">
+                        <span ><b>zoomIn</b></span>
+                        <a href="#zoomIn"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="368" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:368</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="zoomOut"></a>
+                    <span class="name">
+                        <span ><b>zoomOut</b></span>
+                        <a href="#zoomOut"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="360" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:360</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="zoomReset"></a>
+                    <span class="name">
+                        <span ><b>zoomReset</b></span>
+                        <a href="#zoomReset"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="376" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:376</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="zoomSpeed"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>zoomSpeed</b></span>
+                        <a href="#zoomSpeed"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1.0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/driverama-360-renderer/src/interior/InteriorControls.ts:70</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { isApproxZero } from &#x27;../math&#x27;
+import {
+  EventDispatcher,
+  PerspectiveCamera,
+  Quaternion,
+  Spherical,
+  Vector2,
+  Vector3,
+  MathUtils
+} from &#x27;../three&#x27;
+import { degToRad } from &#x27;three/src/math/MathUtils&#x27;
+
+// This set of controls performs orbiting, dollying (zooming), and panning.
+// Unlike TrackballControls, it maintains the &quot;up&quot; direction object.up (+Y by default).
+//
+//    Orbit - left mouse / touch: one-finger move
+//    Zoom - middle mouse, or mousewheel / touch: two-finger spread or squish
+//    Pan - right mouse, or left mouse + ctrl/meta/shiftKey, or arrow keys / touch: two-finger move
+
+const _changeEvent &#x3D; { type: &#x27;change&#x27; }
+const _startEvent &#x3D; { type: &#x27;start&#x27; }
+const _endEvent &#x3D; { type: &#x27;end&#x27; }
+
+const EPS &#x3D; 0.000001
+const STATE &#x3D; {
+  NONE: -1,
+  ROTATE: 0,
+  TOUCH_ROTATE: 3,
+  TOUCH_DOLLY_PAN: 5
+}
+
+export class InteriorControls extends EventDispatcher {
+  // Set to false to disable this control
+  enabled &#x3D; true
+
+  // &quot;target&quot; sets the location of focus, where the object orbits around
+  target &#x3D; new Vector3()
+
+  // handle zoom inside the cubemap
+  minFov &#x3D; 0
+  maxFov &#x3D; 100
+
+  // How far you can dolly in and out ( PerspectiveCamera only )
+  protected minDistance &#x3D; 0
+  protected maxDistance &#x3D; Infinity
+
+  protected fov: number
+  protected fovEnd: number
+
+  // How far you can orbit vertically, upper and lower limits. Current values are set to account for black spots at bottom/top of interior images.
+  // Range is 0 to Math.PI radians.
+  protected minPolarAngle &#x3D; degToRad(75) // radians
+  protected maxPolarAngle &#x3D; degToRad(102) // radians
+
+  // How far you can orbit horizontally, upper and lower limits.
+  // If set, the interval [ min, max ] must be a sub-interval of [ - 2 PI, 2 PI ], with ( max - min &lt; 2 PI )
+  protected minAzimuthAngle &#x3D; -Infinity // radians
+  protected maxAzimuthAngle &#x3D; Infinity // radians
+
+  // Set to true to enable damping (inertia)
+  // If damping is enabled, you must call controls.update() in your animation loop
+  protected enableDamping &#x3D; false
+  protected dampingFactor &#x3D; 0.05
+  protected dampingZoomFactor &#x3D; 0.25
+
+  // This option actually enables dollying in and out; left as &quot;zoom&quot; for backwards compatibility.
+  // Set to false to disable zooming
+  protected enableZoom &#x3D; true
+  protected enableWheelZoom &#x3D; false
+  protected zoomSpeed &#x3D; 1.0
+
+  // Set to false to disable rotating
+  protected enableRotate &#x3D; true
+  protected rotateSpeed &#x3D; 0.35
+
+  // Set to true to automatically rotate around the target
+  // If auto-rotate is enabled, you must call controls.update() in your animation loop
+  protected autoRotate &#x3D; false
+  protected autoRotateSpeed &#x3D; 2.0 // 30 seconds per orbit when fps is 60
+
+  protected camera: PerspectiveCamera
+  protected domElement: HTMLElement
+
+  protected target0: Vector3
+  protected position0: Vector3
+
+  protected state &#x3D; STATE.NONE
+
+  // current position in spherical coordinates
+  protected spherical &#x3D; new Spherical()
+  protected sphericalDelta &#x3D; new Spherical()
+
+  protected panOffset &#x3D; new Vector3()
+  protected zoomChanged &#x3D; false
+
+  protected rotateStart &#x3D; new Vector2()
+  protected rotateEnd &#x3D; new Vector2()
+  protected rotateDelta &#x3D; new Vector2()
+
+  protected panStart &#x3D; new Vector2()
+  protected panEnd &#x3D; new Vector2()
+  protected panDelta &#x3D; new Vector2()
+
+  protected dollyStart &#x3D; new Vector2()
+  protected dollyEnd &#x3D; new Vector2()
+  protected dollyDelta &#x3D; new Vector2()
+
+  protected pointers: PointerEvent[] &#x3D; []
+  protected pointerPositions: Record&lt;number, Vector2&gt; &#x3D; {}
+
+  protected onZoomChange: (data: { ratio: number; value: number }) &#x3D;&gt; void
+
+  update: (delta: number) &#x3D;&gt; void
+
+  dispose &#x3D; () &#x3D;&gt; {
+    this.domElement.removeEventListener(&#x27;contextmenu&#x27;, this.onContextMenu)
+
+    this.domElement.removeEventListener(&#x27;pointerdown&#x27;, this.onPointerDown)
+    this.domElement.removeEventListener(&#x27;pointercancel&#x27;, this.onPointerCancel)
+    this.domElement.removeEventListener(&#x27;wheel&#x27;, this.onMouseWheel)
+
+    this.domElement.removeEventListener(&#x27;pointermove&#x27;, this.onPointerMove)
+    this.domElement.removeEventListener(&#x27;pointerup&#x27;, this.onPointerUp)
+  }
+
+  protected getPolarAngle &#x3D; () &#x3D;&gt; {
+    return this.spherical.phi
+  }
+
+  protected getAzimuthalAngle &#x3D; () &#x3D;&gt; {
+    return this.spherical.theta
+  }
+
+  protected getDistance &#x3D; () &#x3D;&gt; {
+    return this.camera.position.distanceTo(this.target)
+  }
+
+  protected saveState &#x3D; () &#x3D;&gt; {
+    this.target0.copy(this.target)
+    this.position0.copy(this.camera.position)
+  }
+
+  protected reset &#x3D; () &#x3D;&gt; {
+    this.target.copy(this.target0)
+    this.camera.position.copy(this.position0)
+
+    this.camera.updateProjectionMatrix()
+    this.dispatchEvent(_changeEvent)
+
+    this.update(0)
+
+    this.state &#x3D; STATE.NONE
+  }
+
+  constructor(
+    object: PerspectiveCamera,
+    domElement: HTMLElement,
+    onZoomChange: (data: { ratio: number; value: number }) &#x3D;&gt; void
+  ) {
+    super()
+
+    this.camera &#x3D; object
+    this.domElement &#x3D; domElement
+    this.domElement.style.touchAction &#x3D; &#x27;none&#x27; // disable touch scroll
+
+    this.onZoomChange &#x3D; onZoomChange
+
+    // for reset
+    this.target0 &#x3D; this.target.clone()
+    this.position0 &#x3D; this.camera.position.clone()
+
+    this.fov &#x3D; this.camera.fov
+    this.fovEnd &#x3D; this.fov
+
+    this.update &#x3D; (() &#x3D;&gt; {
+      const offset &#x3D; new Vector3()
+
+      // so camera.up is the orbit axis
+      const quat &#x3D; new Quaternion().setFromUnitVectors(
+        this.camera.up,
+        new Vector3(0, 1, 0)
+      )
+      const quatInverse &#x3D; quat.clone().invert()
+
+      const lastPosition &#x3D; new Vector3()
+      const lastQuaternion &#x3D; new Quaternion()
+
+      const twoPI &#x3D; 2 * Math.PI
+
+      return (delta: number) &#x3D;&gt; {
+        const lerpRatio &#x3D; Math.min(this.dampingZoomFactor * delta * 75, 1)
+
+        const fovDelta &#x3D; (this.fovEnd - this.fov) * lerpRatio
+        this.fov +&#x3D; fovDelta
+        this.fov &#x3D; MathUtils.clamp(this.fov, this.minFov, this.maxFov)
+
+        if (this.camera.fov !&#x3D;&#x3D; this.fov) {
+          if (isApproxZero(fovDelta)) this.fov &#x3D; this.fovEnd
+          this.camera.fov &#x3D; this.fov
+          this.camera.updateProjectionMatrix()
+
+          this.onZoomChange({
+            value: this.fov,
+            ratio: 1 - (this.fov - this.minFov) / (this.maxFov - this.minFov)
+          })
+        }
+
+        const position &#x3D; this.camera.position
+
+        offset.copy(position).sub(this.target)
+
+        // rotate offset to &quot;y-axis-is-up&quot; space
+        offset.applyQuaternion(quat)
+
+        // angle from z-axis around y-axis
+        this.spherical.setFromVector3(offset)
+
+        if (this.autoRotate &amp;&amp; this.state &#x3D;&#x3D;&#x3D; STATE.NONE) {
+          this.rotateLeft(this.getAutoRotationAngle())
+        }
+
+        if (this.enableDamping) {
+          this.spherical.theta +&#x3D; this.sphericalDelta.theta * this.dampingFactor
+          this.spherical.phi +&#x3D; this.sphericalDelta.phi * this.dampingFactor
+        } else {
+          this.spherical.theta +&#x3D; this.sphericalDelta.theta
+          this.spherical.phi +&#x3D; this.sphericalDelta.phi
+        }
+
+        // restrict theta to be between desired limits
+        let min &#x3D; this.minAzimuthAngle
+        let max &#x3D; this.maxAzimuthAngle
+
+        if (isFinite(min) &amp;&amp; isFinite(max)) {
+          if (min &lt; -Math.PI) min +&#x3D; twoPI
+          else if (min &gt; Math.PI) min -&#x3D; twoPI
+
+          if (max &lt; -Math.PI) max +&#x3D; twoPI
+          else if (max &gt; Math.PI) max -&#x3D; twoPI
+
+          if (min &lt;&#x3D; max) {
+            this.spherical.theta &#x3D; Math.max(
+              min,
+              Math.min(max, this.spherical.theta)
+            )
+          } else {
+            this.spherical.theta &#x3D;
+              this.spherical.theta &gt; (min + max) / 2
+                ? Math.max(min, this.spherical.theta)
+                : Math.min(max, this.spherical.theta)
+          }
+        }
+
+        // restrict phi to be between desired limits
+        // adjust min/max vertical angle according to camera FOV changes
+        const cameraFovOffsetAngle &#x3D; degToRad(this.maxFov - this.camera.fov)
+        this.spherical.phi &#x3D; MathUtils.clamp(
+          this.spherical.phi,
+          this.minPolarAngle - cameraFovOffsetAngle / 2,
+          this.maxPolarAngle + cameraFovOffsetAngle / 2
+        )
+
+        this.spherical.makeSafe()
+
+        // restrict radius to be between desired limits
+        this.spherical.radius &#x3D; Math.max(
+          this.minDistance,
+          Math.min(this.maxDistance, this.spherical.radius)
+        )
+
+        // move target to panned location
+        if (this.enableDamping &#x3D;&#x3D;&#x3D; true) {
+          this.target.addScaledVector(this.panOffset, this.dampingFactor)
+        } else {
+          this.target.add(this.panOffset)
+        }
+
+        offset.setFromSpherical(this.spherical)
+
+        // rotate offset back to &quot;camera-up-vector-is-up&quot; space
+        offset.applyQuaternion(quatInverse)
+
+        position.copy(this.target).add(offset)
+
+        this.camera.lookAt(this.target)
+
+        if (this.enableDamping &#x3D;&#x3D;&#x3D; true) {
+          this.sphericalDelta.theta *&#x3D; 1 - this.dampingFactor
+          this.sphericalDelta.phi *&#x3D; 1 - this.dampingFactor
+
+          this.panOffset.multiplyScalar(1 - this.dampingFactor)
+        } else {
+          this.sphericalDelta.set(0, 0, 0)
+          this.panOffset.set(0, 0, 0)
+        }
+
+        // scale &#x3D; 1
+
+        // update condition is:
+        // min(camera displacement, camera rotation in radians)^2 &gt; EPS
+        // using small-angle approximation cos(x/2) &#x3D; 1 - x^2 / 8
+
+        if (
+          this.zoomChanged ||
+          lastPosition.distanceToSquared(this.camera.position) &gt; EPS ||
+          8 * (1 - lastQuaternion.dot(this.camera.quaternion)) &gt; EPS
+        ) {
+          this.dispatchEvent(_changeEvent)
+
+          lastPosition.copy(this.camera.position)
+          lastQuaternion.copy(this.camera.quaternion)
+          this.zoomChanged &#x3D; false
+
+          return true
+        }
+
+        return false
+      }
+    })()
+
+    this.domElement.addEventListener(&#x27;contextmenu&#x27;, this.onContextMenu)
+    this.domElement.addEventListener(&#x27;pointerdown&#x27;, this.onPointerDown)
+    this.domElement.addEventListener(&#x27;pointercancel&#x27;, this.onPointerCancel)
+    this.domElement.addEventListener(&#x27;wheel&#x27;, this.onMouseWheel, {
+      passive: false
+    })
+
+    // force an update at start
+    this.update(0)
+  }
+
+  protected getAutoRotationAngle &#x3D; () &#x3D;&gt; {
+    return ((2 * Math.PI) / 60 / 60) * this.autoRotateSpeed
+  }
+
+  protected getZoomScale &#x3D; () &#x3D;&gt; {
+    return Math.pow(0.95, this.zoomSpeed)
+  }
+
+  protected rotateLeft &#x3D; (angle: number) &#x3D;&gt; {
+    this.sphericalDelta.theta +&#x3D; angle
+  }
+
+  protected rotateUp &#x3D; (angle: number) &#x3D;&gt; {
+    this.sphericalDelta.phi +&#x3D; angle
+  }
+
+  protected zoomDelta &#x3D; (delta: number, immediate: boolean) &#x3D;&gt; {
+    this.fovEnd &#x3D; MathUtils.clamp(
+      this.camera.fov + delta,
+      this.minFov,
+      this.maxFov
+    )
+
+    if (immediate) {
+      this.fov &#x3D; this.fovEnd
+    }
+  }
+
+  zoomOut &#x3D; () &#x3D;&gt; {
+    this.fovEnd &#x3D; MathUtils.clamp(
+      this.camera.fov * 1.5,
+      this.minFov,
+      this.maxFov
+    )
+  }
+
+  zoomIn &#x3D; () &#x3D;&gt; {
+    this.fovEnd &#x3D; MathUtils.clamp(
+      this.camera.fov / 1.5,
+      this.minFov,
+      this.maxFov
+    )
+  }
+
+  zoomReset &#x3D; () &#x3D;&gt; {
+    // 75 is the default value of zoom reset
+    this.fovEnd &#x3D; MathUtils.clamp(75, this.maxFov, this.maxFov)
+  }
+
+  //
+  // event callbacks - update the object state
+  //
+  protected handleMouseDownRotate &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    this.rotateStart.set(event.clientX, event.clientY)
+  }
+
+  protected handleMouseMoveRotate &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    this.rotateEnd.set(event.clientX, event.clientY)
+
+    this.rotateDelta
+      .subVectors(this.rotateEnd, this.rotateStart)
+      .multiplyScalar((this.fov / this.maxFov) * this.rotateSpeed) // adjust rotation speed by current zoom
+
+    const element &#x3D; this.domElement
+
+    this.rotateLeft((2 * Math.PI * this.rotateDelta.x) / element.clientHeight) // yes, height
+    this.rotateUp((2 * Math.PI * this.rotateDelta.y) / element.clientHeight)
+    this.rotateStart.copy(this.rotateEnd)
+
+    this.update(0)
+  }
+
+  protected handleMouseUp &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    // no-op
+  }
+
+  protected handleMouseWheel &#x3D; (event: WheelEvent) &#x3D;&gt; {
+    this.zoomDelta(Math.atan(event.deltaY), true)
+    this.update(0)
+  }
+
+  protected handleTouchStartRotate &#x3D; () &#x3D;&gt; {
+    if (this.pointers.length &#x3D;&#x3D;&#x3D; 1) {
+      this.rotateStart.set(this.pointers[0].pageX, this.pointers[0].pageY)
+    } else {
+      const x &#x3D; 0.5 * (this.pointers[0].pageX + this.pointers[1].pageX)
+      const y &#x3D; 0.5 * (this.pointers[0].pageY + this.pointers[1].pageY)
+
+      this.rotateStart.set(x, y)
+    }
+  }
+
+  protected handleTouchStartDolly &#x3D; () &#x3D;&gt; {
+    const dx &#x3D; this.pointers[0].pageX - this.pointers[1].pageX
+    const dy &#x3D; this.pointers[0].pageY - this.pointers[1].pageY
+
+    const distance &#x3D; Math.sqrt(dx * dx + dy * dy)
+
+    this.dollyStart.set(0, distance)
+  }
+
+  protected handleTouchStartDollyPan &#x3D; () &#x3D;&gt; {
+    if (this.enableZoom) this.handleTouchStartDolly()
+  }
+
+  protected handleTouchMoveRotate &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    if (this.pointers.length &#x3D;&#x3D;&#x3D; 1) {
+      this.rotateEnd.set(event.pageX, event.pageY)
+    } else {
+      const position &#x3D; this.getSecondPointerPosition(event)
+
+      const x &#x3D; 0.5 * (event.pageX + position.x)
+      const y &#x3D; 0.5 * (event.pageY + position.y)
+
+      this.rotateEnd.set(x, y)
+    }
+
+    this.rotateDelta
+      .subVectors(this.rotateEnd, this.rotateStart)
+      .multiplyScalar((this.fov / this.maxFov) * this.rotateSpeed) // adjust rotation speed by current zoom
+
+    const element &#x3D; this.domElement
+
+    this.rotateLeft((2 * Math.PI * this.rotateDelta.x) / element.clientHeight) // yes, height
+
+    this.rotateUp((2 * Math.PI * this.rotateDelta.y) / element.clientHeight)
+
+    this.rotateStart.copy(this.rotateEnd)
+  }
+
+  protected handleTouchMoveDolly &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    const position &#x3D; this.getSecondPointerPosition(event)
+
+    const dx &#x3D; event.pageX - position.x
+    const dy &#x3D; event.pageY - position.y
+
+    const distance &#x3D; Math.sqrt(dx * dx + dy * dy)
+
+    this.dollyEnd.set(0, distance)
+    if (this.dollyStart.y &gt; 0) {
+      const scale &#x3D; Math.atan(
+        100 * Math.pow(1 - this.dollyEnd.y / this.dollyStart.y, this.zoomSpeed)
+      )
+      this.zoomDelta(scale, true)
+    }
+    this.dollyStart.copy(this.dollyEnd)
+  }
+
+  protected handleTouchMoveDollyPan &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    if (this.enableZoom) this.handleTouchMoveDolly(event)
+  }
+
+  protected handleTouchEnd &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    // no-op
+  }
+
+  //
+  // event handlers - FSM: listen for events and reset state
+  //
+  protected onPointerDown &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    if (this.enabled &#x3D;&#x3D;&#x3D; false) return
+
+    if (this.pointers.length &#x3D;&#x3D;&#x3D; 0) {
+      this.domElement.setPointerCapture(event.pointerId)
+
+      this.domElement.addEventListener(&#x27;pointermove&#x27;, this.onPointerMove)
+      this.domElement.addEventListener(&#x27;pointerup&#x27;, this.onPointerUp)
+    }
+
+    this.addPointer(event)
+
+    if (event.pointerType &#x3D;&#x3D;&#x3D; &#x27;touch&#x27;) {
+      this.onTouchStart(event)
+    } else {
+      this.onMouseDown(event)
+    }
+  }
+
+  protected onPointerMove &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    if (this.enabled &#x3D;&#x3D;&#x3D; false) return
+
+    if (event.pointerType &#x3D;&#x3D;&#x3D; &#x27;touch&#x27;) {
+      this.onTouchMove(event)
+    } else {
+      this.onMouseMove(event)
+    }
+  }
+
+  protected onPointerUp &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    if (this.enabled &#x3D;&#x3D;&#x3D; false) return
+
+    if (event.pointerType &#x3D;&#x3D;&#x3D; &#x27;touch&#x27;) {
+      this.onTouchEnd(event)
+    } else {
+      this.onMouseUp(event)
+    }
+
+    this.removePointer(event)
+
+    if (this.pointers.length &#x3D;&#x3D;&#x3D; 0) {
+      this.domElement.releasePointerCapture(event.pointerId)
+      this.domElement.removeEventListener(&#x27;pointermove&#x27;, this.onPointerMove)
+      this.domElement.removeEventListener(&#x27;pointerup&#x27;, this.onPointerUp)
+    }
+  }
+
+  protected onPointerCancel &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    this.removePointer(event)
+  }
+
+  protected onMouseDown &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    if (this.enableRotate &#x3D;&#x3D;&#x3D; false) return
+    this.handleMouseDownRotate(event)
+    this.state &#x3D; STATE.ROTATE
+    this.dispatchEvent(_startEvent)
+  }
+
+  protected onMouseMove &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    if (this.enabled &#x3D;&#x3D;&#x3D; false) return
+
+    switch (this.state) {
+      case STATE.ROTATE:
+        if (this.enableRotate &#x3D;&#x3D;&#x3D; false) return
+        this.handleMouseMoveRotate(event)
+        break
+
+      default:
+        break
+    }
+  }
+
+  protected onMouseUp &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    this.handleMouseUp(event)
+    this.dispatchEvent(_endEvent)
+    this.state &#x3D; STATE.NONE
+  }
+
+  protected onMouseWheel &#x3D; (event: WheelEvent) &#x3D;&gt; {
+    if (
+      this.enabled &#x3D;&#x3D;&#x3D; false ||
+      this.enableZoom &#x3D;&#x3D;&#x3D; false ||
+      this.enableWheelZoom &#x3D;&#x3D;&#x3D; false ||
+      (this.state !&#x3D;&#x3D; STATE.NONE &amp;&amp; this.state !&#x3D;&#x3D; STATE.ROTATE)
+    ) {
+      return
+    }
+
+    event.preventDefault()
+
+    this.dispatchEvent(_startEvent)
+    this.handleMouseWheel(event)
+    this.dispatchEvent(_endEvent)
+  }
+
+  protected onTouchStart &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    this.trackPointer(event)
+
+    switch (this.pointers.length) {
+      case 1:
+        if (this.enableRotate &#x3D;&#x3D;&#x3D; false) return
+        this.handleTouchStartRotate()
+        this.state &#x3D; STATE.TOUCH_ROTATE
+
+        break
+
+      case 2:
+        if (this.enableZoom &#x3D;&#x3D;&#x3D; false) return
+        this.handleTouchStartDollyPan()
+        this.state &#x3D; STATE.TOUCH_DOLLY_PAN
+
+        break
+
+      default:
+        this.state &#x3D; STATE.NONE
+    }
+
+    if (this.state !&#x3D;&#x3D; STATE.NONE) {
+      this.dispatchEvent(_startEvent)
+    }
+  }
+
+  protected onTouchMove &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    this.trackPointer(event)
+
+    switch (this.state) {
+      case STATE.TOUCH_ROTATE:
+        if (this.enableRotate &#x3D;&#x3D;&#x3D; false) return
+
+        this.handleTouchMoveRotate(event)
+        this.update(0)
+
+        break
+
+      case STATE.TOUCH_DOLLY_PAN:
+        if (this.enableZoom &#x3D;&#x3D;&#x3D; false) return
+
+        this.handleTouchMoveDollyPan(event)
+        this.update(0)
+
+        break
+
+      default:
+        this.state &#x3D; STATE.NONE
+    }
+  }
+
+  protected onTouchEnd &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    this.handleTouchEnd(event)
+    this.dispatchEvent(_endEvent)
+    this.state &#x3D; STATE.NONE
+  }
+
+  protected onContextMenu &#x3D; (event: MouseEvent) &#x3D;&gt; {
+    if (this.enabled &#x3D;&#x3D;&#x3D; false) return
+    event.preventDefault()
+  }
+
+  protected addPointer &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    this.pointers.push(event)
+  }
+
+  protected removePointer &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    delete this.pointerPositions[event.pointerId]
+
+    for (let i &#x3D; 0; i &lt; this.pointers.length; i++) {
+      if (this.pointers[i].pointerId &#x3D;&#x3D;&#x3D; event.pointerId) {
+        this.pointers.splice(i, 1)
+        return
+      }
+    }
+  }
+
+  protected trackPointer &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    let position &#x3D; this.pointerPositions[event.pointerId]
+
+    if (position &#x3D;&#x3D;&#x3D; undefined) {
+      position &#x3D; new Vector2()
+      this.pointerPositions[event.pointerId] &#x3D; position
+    }
+
+    position.set(event.pageX, event.pageY)
+  }
+
+  protected getSecondPointerPosition &#x3D; (event: PointerEvent) &#x3D;&gt; {
+    const pointer &#x3D;
+      event.pointerId &#x3D;&#x3D;&#x3D; this.pointers[0].pointerId
+        ? this.pointers[1]
+        : this.pointers[0]
+
+    return this.pointerPositions[pointer.pointerId]
+  }
+
+  setWheelEnabled &#x3D; (state: boolean) &#x3D;&gt; {
+    this.enableWheelZoom &#x3D; state
+  }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'InteriorControls.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
