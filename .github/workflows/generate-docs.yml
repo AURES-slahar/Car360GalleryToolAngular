@@ -48,8 +48,6 @@ env:
   NODE_VERSION: '20'
   DOCS_OUTPUT_DIR: 'docs'
   CLAUDE_CONTEXT_DIR: '.claude-context'
-  # Add any API keys for documentation services
-  DOCUMENTER_API_KEY: ${{ secrets.DOCUMENTER_API_KEY }}
 
 # ============================================
 # JOBS
@@ -62,10 +60,12 @@ jobs:
     runs-on: ubuntu-latest
     
     # Only run for specific file changes (optimization)
-    # if: |
-    #   contains(github.event.head_commit.modified, '.ts') ||
-    #   contains(github.event.head_commit.modified, '.js') ||
-    #   github.event_name == 'workflow_dispatch'
+    if: |
+      contains(toJson(github.event.commits), '.ts') ||
+      contains(toJson(github.event.commits), '.js') ||
+      contains(toJson(github.event.commits), '.json') ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule'
     
     permissions:
       contents: write  # Needed for GitHub Pages deployment
@@ -84,11 +84,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Fetch all history for git-based documentation
-          # fetch-depth: 0 is important for:
-          # - Changelog generation
-          # - Git history in documentation
-          # - Comparing changes between versions
+          fetch-depth: 10  # Fetch limited history for changelog generation
+          # Reduced from 0 to improve performance while keeping recent history
       
       # ============================================
       # STEP 2: DETECT PROJECT TYPE
@@ -193,8 +190,8 @@ jobs:
           echo "Installing npm dependencies..."
           npm ci --prefer-offline --no-audit
           
-          echo "Installing global documentation tools..."
-          npm install -g \
+          echo "Installing documentation tools locally..."
+          npm install --no-save \
             @compodoc/compodoc \
             typedoc \
             typedoc-plugin-markdown \
@@ -271,9 +268,9 @@ jobs:
           fi
           
           # Try to generate with configuration
-          npx compodoc || {
+          ./node_modules/.bin/compodoc || {
             echo "Compodoc failed with configuration, trying with minimal options..."
-            npx compodoc \
+            ./node_modules/.bin/compodoc \
               -p tsconfig.json \
               -d ${{ env.DOCS_OUTPUT_DIR }}/compodoc \
               --disableCoverage \
@@ -343,7 +340,7 @@ jobs:
           fi
           
           # Try to generate with skip error checking
-          npx typedoc \
+          ./node_modules/.bin/typedoc \
             --skipErrorChecking \
             --exclude "**/{node_modules,e2e,*.spec.ts,*.e2e-spec.ts}" \
             || echo "TypeDoc completed with warnings"
@@ -359,7 +356,7 @@ jobs:
           
           # For Node.js/Express projects
           if [ -f "swagger.config.js" ] || [ -f "openapi.config.js" ]; then
-            npx swagger-jsdoc -d swagger.config.js -o ${{ env.DOCS_OUTPUT_DIR }}/api/openapi.json
+            ./node_modules/.bin/swagger-jsdoc -d swagger.config.js -o ${{ env.DOCS_OUTPUT_DIR }}/api/openapi.json || true
           fi
           
           # For Symfony projects
@@ -370,15 +367,14 @@ jobs:
           
           # Convert OpenAPI to HTML using Redoc
           if [ -f "${{ env.DOCS_OUTPUT_DIR }}/api/openapi.json" ]; then
-            npx @redocly/cli build-docs \
+            ./node_modules/.bin/redocly build-docs \
               ${{ env.DOCS_OUTPUT_DIR }}/api/openapi.json \
-              -o ${{ env.DOCS_OUTPUT_DIR }}/api/index.html \
-              --theme.openapi.hideDownloadButton
+              -o ${{ env.DOCS_OUTPUT_DIR }}/api/index.html || true
           fi
           
           # Generate Postman collection
           if [ -f "${{ env.DOCS_OUTPUT_DIR }}/api/openapi.json" ]; then
-            npx openapi-to-postmanv2 \
+            ./node_modules/.bin/openapi-to-postmanv2 \
               -s ${{ env.DOCS_OUTPUT_DIR }}/api/openapi.json \
               -o ${{ env.DOCS_OUTPUT_DIR }}/api/postman-collection.json \
               -p || true
@@ -395,14 +391,14 @@ jobs:
           
           # Generate dependency graph with Madge
           if [ -d "src" ]; then
-            npx madge \
+            ./node_modules/.bin/madge \
               --image ${{ env.DOCS_OUTPUT_DIR }}/assets/dependency-graph.svg \
               --circular \
               --warning \
               src/ || true
             
             # Generate circular dependencies report
-            npx madge \
+            ./node_modules/.bin/madge \
               --circular \
               --json \
               src/ > ${{ env.DOCS_OUTPUT_DIR }}/circular-dependencies.json || true
@@ -449,23 +445,34 @@ jobs:
           fi
           
           # Generate dependency report
-          npx dependency-cruiser \
+          ./node_modules/.bin/depcruise \
             --config .dependency-cruiser.js \
             --output-type html \
             --output-to ${{ env.DOCS_OUTPUT_DIR }}/dependency-report.html \
             src || true
           
-          # Generate npm dependencies list
-          npm list --all --json > ${{ env.DOCS_OUTPUT_DIR }}/npm-dependencies.json
+          # Generate npm dependencies list with timeout
+          echo "Generating npm dependencies list..."
+          timeout 60s npm list --depth=2 --json > ${{ env.DOCS_OUTPUT_DIR }}/npm-dependencies.json 2>/dev/null || \
+            echo '{"error": "Dependencies list generation timed out or failed"}' > ${{ env.DOCS_OUTPUT_DIR }}/npm-dependencies.json
           
-          # Create dependency summary
+          # Create dependency summary with error handling
+          echo "Creating dependency summary..."
+          
+          TOTAL_DEPS=$(npm list --depth=0 --json 2>/dev/null | jq -r '.dependencies | length // 0' || echo "0")
+          PROD_DEPS=$(npm list --prod --depth=0 --json 2>/dev/null | jq -r '.dependencies | length // 0' || echo "0")
+          DEV_DEPS=$(npm list --dev --depth=0 --json 2>/dev/null | jq -r '.dependencies | length // 0' || echo "0")
+          OUTDATED=$(npm outdated --json 2>/dev/null | jq -r '. | length // 0' || echo "0")
+          VULNS=$(npm audit --json 2>/dev/null | jq -r '.metadata.vulnerabilities | add // 0' || echo "0")
+          
           cat > ${{ env.DOCS_OUTPUT_DIR }}/dependency-summary.json << EOF
           {
-            "total": $(npm list --depth=0 --json | jq '.dependencies | length'),
-            "production": $(npm list --prod --depth=0 --json | jq '.dependencies | length'),
-            "development": $(npm list --dev --depth=0 --json | jq '.dependencies | length'),
-            "outdated": $(npm outdated --json | jq '. | length'),
-            "vulnerabilities": $(npm audit --json | jq '.metadata.vulnerabilities | add')
+            "total": $TOTAL_DEPS,
+            "production": $PROD_DEPS,
+            "development": $DEV_DEPS,
+            "outdated": $OUTDATED,
+            "vulnerabilities": $VULNS,
+            "generated": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
           }
           EOF
           
@@ -519,22 +526,30 @@ jobs:
         run: |
           echo "Generating AI context files..."
           
-          # Download and run context generator if not exists
-          if [ ! -f "scripts/generate-claude-context.js" ]; then
-            mkdir -p scripts
-            cat > scripts/generate-claude-context.js << 'EOF'
-          // Context generator script
-          const fs = require('fs');
-          const path = require('path');
-          const glob = require('glob');
+          # Generate basic context files (skip incomplete script)
+          echo "Generating basic context files..."
           
-          // [Previous context generator code here]
-          // ... (full script from previous artifact)
-          EOF
-          fi
+          # Create basic project context
+          cat > ${{ env.CLAUDE_CONTEXT_DIR }}/PROJECT_CONTEXT.md << 'CTXEOF'
+          # Project Context
           
-          # Run context generator
-          node scripts/generate-claude-context.js
+          ## Repository Information
+          - **Repository**: ${{ github.repository }}
+          - **Branch**: ${{ github.ref_name }}
+          - **Commit**: ${{ github.sha }}
+          - **Generated**: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          
+          ## Project Type
+          - Angular Application
+          - TypeScript
+          - Node.js based
+          
+          ## Key Files and Directories
+          - \`src/\` - Application source code
+          - \`angular.json\` - Angular configuration
+          - \`tsconfig.json\` - TypeScript configuration
+          - \`package.json\` - Node.js dependencies
+          CTXEOF
           
           # Generate additional context files
           
@@ -629,7 +644,7 @@ jobs:
         run: |
           echo "Creating documentation index..."
           
-          cat > ${{ env.DOCS_OUTPUT_DIR }}/index.html << 'EOF'
+          cat > ${{ env.DOCS_OUTPUT_DIR }}/index.html << EOF
           <!DOCTYPE html>
           <html lang="en">
           <head>
@@ -976,7 +991,8 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const tag = `docs-${new Date().toISOString().split('T')[0]}`;
+            const now = new Date();
+            const tag = `docs-${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}-${String(now.getUTCDate()).padStart(2, '0')}`;
             
             try {
               await github.rest.repos.createRelease({
