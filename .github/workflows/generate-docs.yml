@@ -40,7 +40,7 @@ on:
       commit_to_repo:
         description: 'Commit generated docs to repository'
         required: false
-        default: 'false'
+        default: 'true'
         type: choice
         options:
           - 'true'
@@ -1050,7 +1050,11 @@ jobs:
       # STEP 20: COMMIT TO REPOSITORY (OPTIONAL)
       # ============================================
       - name: Commit generated documentation to repository
-        if: github.event.inputs.commit_to_repo == 'true' && github.ref == 'refs/heads/main'
+        if: |
+          (github.event.inputs.commit_to_repo == 'true' || 
+           (github.event_name == 'push' && contains(github.event.head_commit.message, '[docs-commit]'))) &&
+          github.ref == 'refs/heads/main' &&
+          !contains(github.event.head_commit.message, '[skip-docs-commit]')
         run: |
           echo "Committing generated documentation to repository..."
           
@@ -1065,7 +1069,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "📚 Update generated documentation
+            git commit -m "📚 Update generated documentation [skip-docs-commit]
 
             - Generated documentation for commit ${{ github.sha }}
             - Includes API docs, coverage reports, and AI context
