@@ -191,16 +191,16 @@ jobs:
           npm ci --prefer-offline --no-audit
           
           echo "Installing documentation tools locally..."
-          npm install --no-save \
-            @compodoc/compodoc \
-            typedoc \
-            typedoc-plugin-markdown \
-            swagger-jsdoc \
-            @redocly/cli \
-            madge \
-            jsdoc \
-            documentation \
-            dependency-cruiser
+          npm install --no-save --legacy-peer-deps \
+            @compodoc/compodoc@^1.1.21 \
+            typedoc@^0.25.13 \
+            typedoc-plugin-markdown@^3.17.1 \
+            swagger-jsdoc@^6.2.8 \
+            @redocly/cli@^1.10.0 \
+            madge@^7.0.0 \
+            jsdoc@^4.0.2 \
+            documentation@^14.0.3 \
+            dependency-cruiser@^16.2.4
       
       - name: Install PHP dependencies
         if: steps.detect.outputs.type == 'symfony'
