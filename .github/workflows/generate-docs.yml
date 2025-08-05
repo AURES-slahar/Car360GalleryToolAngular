@@ -735,7 +735,7 @@ jobs:
                       <div class="meta">
                           <p>📅 Generated: $(date -u +"%Y-%m-%d %H:%M:%S UTC")</p>
                           <p>🔧 Branch: ${{ github.ref_name }}</p>
-                          <p>📦 Commit: ${{ github.sha.substring(0, 7) }}</p>
+                          <p>📦 Commit: ${{ github.sha }}</p>
                       </div>
                   </header>
                   
