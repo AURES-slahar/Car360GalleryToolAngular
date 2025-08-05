@@ -137,6 +137,12 @@ jobs:
           cache: 'npm'
           # Cache speeds up subsequent runs by caching node_modules
       
+      # Install system dependencies
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz
+      
       # ============================================
       # STEP 4: SETUP PHP (IF SYMFONY)
       # ============================================
@@ -242,7 +248,7 @@ jobs:
           
           # Create configuration if not exists
           if [ ! -f ".compodocrc.json" ]; then
-            cat > .compodocrc.json << 'EOF'
+            cat > .compodocrc.json << EOF
           {
             "name": "${{ github.event.repository.name }} Documentation",
             "output": "${{ env.DOCS_OUTPUT_DIR }}/compodoc",
@@ -253,7 +259,6 @@ jobs:
             "disableLifeCycleHooks": false,
             "disableRoutesGraph": false,
             "hideGenerator": true,
-            "includes": "./docs",
             "includePrivate": false,
             "exclude": [
               "**/*.spec.ts",
@@ -496,8 +501,8 @@ jobs:
             elif npm run | grep -q "coverage"; then
               npm run coverage || true
             else
-              # Run generic test with coverage
-              npm test -- --coverage --coverageDirectory=${{ env.DOCS_OUTPUT_DIR }}/coverage || true
+              # Run generic test with coverage (Angular specific)
+              npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage --code-coverage-dir=${{ env.DOCS_OUTPUT_DIR }}/coverage || true
             fi
           fi
           
@@ -530,14 +535,15 @@ jobs:
           echo "Generating basic context files..."
           
           # Create basic project context
-          cat > ${{ env.CLAUDE_CONTEXT_DIR }}/PROJECT_CONTEXT.md << 'CTXEOF'
+          CURRENT_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          cat > ${{ env.CLAUDE_CONTEXT_DIR }}/PROJECT_CONTEXT.md << CTXEOF
           # Project Context
           
           ## Repository Information
           - **Repository**: ${{ github.repository }}
           - **Branch**: ${{ github.ref_name }}
           - **Commit**: ${{ github.sha }}
-          - **Generated**: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          - **Generated**: $CURRENT_DATE
           
           ## Project Type
           - Angular Application
@@ -577,6 +583,7 @@ jobs:
           fi
           
           # 4. Create quick reference
+          TECH_STACK=$(cat package.json | jq -r '.dependencies | keys | join(", ")' 2>/dev/null | head -c 200 || echo "Angular, TypeScript, RxJS")
           cat > ${{ env.CLAUDE_CONTEXT_DIR }}/quick-reference.md << EOREF
           # Quick Reference for AI Assistants
           
@@ -585,7 +592,7 @@ jobs:
           ### Key Commands
           \`\`\`bash
           npm install        # Install dependencies
-          npm run dev        # Start development server
+          npm run start      # Start development server
           npm run build      # Build for production
           npm test          # Run tests
           npm run docs      # Generate documentation
@@ -598,7 +605,7 @@ jobs:
           - \`.github/workflows/\` - CI/CD pipelines
           
           ### Technology Stack
-          $(cat package.json | jq -r '.dependencies | keys | join(", ")' | head -c 200)...
+          $TECH_STACK
           
           ### Recent Changes
           ${{ github.event.head_commit.message }}
@@ -607,8 +614,11 @@ jobs:
           - Repository: ${{ github.repository }}
           - Branch: ${{ github.ref_name }}
           - Commit: ${{ github.sha }}
-          - Timestamp: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          - Timestamp: $CURRENT_DATE
           EOREF
+          
+          # Copy context files to docs directory for web access
+          cp ${{ env.CLAUDE_CONTEXT_DIR }}/*.md ${{ env.DOCS_OUTPUT_DIR }}/ 2>/dev/null || true
           
           echo "AI context generation complete"
       
@@ -804,10 +814,10 @@ jobs:
                       <div class="card">
                           <h2>🤖 AI Assistant Context</h2>
                           <ul>
-                              <li><a href="../.claude-context/PROJECT_CONTEXT.md">Project Context</a></li>
-                              <li><a href="../.claude-context/quick-reference.md">Quick Reference</a></li>
-                              <li><a href="../.claude-context/file-tree.md">File Structure</a></li>
-                              <li><a href="../.claude-context/api-endpoints.md">API Endpoints</a></li>
+                              <li><a href="PROJECT_CONTEXT.md">Project Context</a></li>
+                              <li><a href="quick-reference.md">Quick Reference</a></li>
+                              <li><a href="file-tree.md">File Structure</a></li>
+                              <li><a href="api-endpoints.md">API Endpoints</a></li>
                           </ul>
                       </div>
                   </div>
