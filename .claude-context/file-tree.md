@@ -4,7 +4,10 @@
 ├── README.md
 ├── angular.json
 ├── docs
+│   ├── CHANGELOG.md
+│   ├── PROJECT_CONTEXT.md
 │   ├── api
+│   ├── api-endpoints.md
 │   ├── assets
 │   │   └── dependency-graph.svg
 │   ├── circular-dependencies.json
@@ -27,8 +30,12 @@
 │   │   └── styles
 │   ├── dependency-report.html
 │   ├── dependency-summary.json
+│   ├── env-vars.md
+│   ├── file-tree.md
 │   ├── guides
+│   ├── index.html
 │   ├── npm-dependencies.json
+│   ├── quick-reference.md
 │   ├── structure.json
 │   └── typedoc
 │       ├── assets
@@ -83,5 +90,5 @@
 ├── tsconfig.spec.json
 └── typedoc.json
 
-39 directories, 43 files
+39 directories, 50 files
 ```
