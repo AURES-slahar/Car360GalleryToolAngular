@@ -1,0 +1,73 @@
+name: Build Angular App
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  build:
+    runs-on: self-hosted
+    
+    steps:
+    # Step 1: Get code from repository
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    # Step 2: Setup Node.js
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+    
+    # Step 3: Install dependencies
+    - name: Install dependencies
+      run: |
+        echo "📦 Installing dependencies..."
+        npm ci
+        echo "✅ Dependencies installed"
+    
+    # Step 4: Build the app
+    - name: Build Angular app
+      run: |
+        echo "🔨 Building Angular app..."
+        npm run build -- --configuration production
+        echo "✅ Build completed"
+    
+    # Step 5: Verify build output
+    - name: Verify build
+      run: |
+        echo "🔍 Checking build output..."
+        
+        # Check if dist folder exists
+        if [ ! -d "dist" ]; then
+          echo "❌ Error: dist folder not found"
+          exit 1
+        fi
+        
+        # Check if your app folder exists (update the name!)
+        if [ ! -d "dist/photo360-beta" ]; then
+          echo "❌ Error: dist/photo360-beta not found"
+          echo "Found these folders in dist:"
+          ls -la dist/
+          exit 1
+        fi
+        
+        # Check build size
+        BUILD_SIZE=$(du -sh dist/ | cut -f1)
+        echo "📊 Build size: $BUILD_SIZE"
+        
+        # List files in build
+        echo "📁 Build contents:"
+        ls -la dist/photo360-beta/
+        
+        # Check for index.html
+        if [ ! -f "dist/photo360-beta/index.html" ]; then
+          echo "❌ Error: index.html not found"
+          exit 1
+        fi
+        
+        echo "✅ Build verification passed!"
