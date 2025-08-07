@@ -8,7 +8,8 @@ import {
   Vector3,
   MathUtils
 } from '../three'
-import { degToRad } from 'three/src/math/MathUtils'
+import { MathUtils as ThreeMathUtils } from '../three'
+const { degToRad } = ThreeMathUtils
 
 // This set of controls performs orbiting, dollying (zooming), and panning.
 // Unlike TrackballControls, it maintains the "up" direction object.up (+Y by default).
@@ -17,9 +18,9 @@ import { degToRad } from 'three/src/math/MathUtils'
 //    Zoom - middle mouse, or mousewheel / touch: two-finger spread or squish
 //    Pan - right mouse, or left mouse + ctrl/meta/shiftKey, or arrow keys / touch: two-finger move
 
-const _changeEvent = { type: 'change' }
-const _startEvent = { type: 'start' }
-const _endEvent = { type: 'end' }
+const _changeEvent = { type: 'change' } as any
+const _startEvent = { type: 'start' } as any
+const _endEvent = { type: 'end' } as any
 
 const EPS = 0.000001
 const STATE = {
@@ -144,8 +145,8 @@ export class InteriorControls extends EventDispatcher {
     this.target.copy(this.target0)
     this.camera.position.copy(this.position0)
 
-    this.camera.updateProjectionMatrix()
-    this.dispatchEvent(_changeEvent)
+    this.camera.updateProjectionMatrix();
+    (this as any).dispatchEvent(_changeEvent);
 
     this.update(0)
 
@@ -305,7 +306,7 @@ export class InteriorControls extends EventDispatcher {
           lastPosition.distanceToSquared(this.camera.position) > EPS ||
           8 * (1 - lastQuaternion.dot(this.camera.quaternion)) > EPS
         ) {
-          this.dispatchEvent(_changeEvent)
+          (this as any).dispatchEvent(_changeEvent)
 
           lastPosition.copy(this.camera.position)
           lastQuaternion.copy(this.camera.quaternion)
@@ -542,8 +543,8 @@ export class InteriorControls extends EventDispatcher {
   protected onMouseDown = (event: PointerEvent) => {
     if (this.enableRotate === false) return
     this.handleMouseDownRotate(event)
-    this.state = STATE.ROTATE
-    this.dispatchEvent(_startEvent)
+    this.state = STATE.ROTATE;
+    (this as any).dispatchEvent(_startEvent);
   }
 
   protected onMouseMove = (event: PointerEvent) => {
@@ -561,8 +562,8 @@ export class InteriorControls extends EventDispatcher {
   }
 
   protected onMouseUp = (event: PointerEvent) => {
-    this.handleMouseUp(event)
-    this.dispatchEvent(_endEvent)
+    this.handleMouseUp(event);
+    (this as any).dispatchEvent(_endEvent);
     this.state = STATE.NONE
   }
 
@@ -576,11 +577,11 @@ export class InteriorControls extends EventDispatcher {
       return
     }
 
-    event.preventDefault()
+    event.preventDefault();
 
-    this.dispatchEvent(_startEvent)
-    this.handleMouseWheel(event)
-    this.dispatchEvent(_endEvent)
+    (this as any).dispatchEvent(_startEvent);
+    this.handleMouseWheel(event);
+    (this as any).dispatchEvent(_endEvent);
   }
 
   protected onTouchStart = (event: PointerEvent) => {
@@ -606,7 +607,7 @@ export class InteriorControls extends EventDispatcher {
     }
 
     if (this.state !== STATE.NONE) {
-      this.dispatchEvent(_startEvent)
+      (this as any).dispatchEvent(_startEvent)
     }
   }
 
@@ -636,8 +637,8 @@ export class InteriorControls extends EventDispatcher {
   }
 
   protected onTouchEnd = (event: PointerEvent) => {
-    this.handleTouchEnd(event)
-    this.dispatchEvent(_endEvent)
+    this.handleTouchEnd(event);
+    (this as any).dispatchEvent(_endEvent);
     this.state = STATE.NONE
   }
 
