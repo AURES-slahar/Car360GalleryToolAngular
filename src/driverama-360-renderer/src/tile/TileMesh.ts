@@ -68,6 +68,9 @@ export class TileMesh extends THREE.Mesh {
     job.task.result
       .then(texture => {
         if (this.material instanceof THREE.MeshBasicMaterial) {
+          // Set texture color space to sRGB for proper color interpretation
+          // This ensures textures are correctly processed by the LinearSRGB renderer
+          texture.colorSpace = THREE.SRGBColorSpace
           this.material.map = texture
           this.material.opacity = 1
           this.material.needsUpdate = true
@@ -161,7 +164,11 @@ export class TileMesh extends THREE.Mesh {
     )
 
     job.task.execute()
-    return job.task.result
+    // Ensure preloaded textures also have correct color space
+    return job.task.result.then(texture => {
+      texture.colorSpace = THREE.SRGBColorSpace
+      return texture
+    })
   }
 }
 

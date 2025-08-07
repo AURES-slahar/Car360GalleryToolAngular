@@ -1,4 +1,4 @@
-import { WebGLRenderer, Clock } from './three'
+import { WebGLRenderer, Clock, LinearSRGBColorSpace } from './three'
 import {
   ObjectFit,
   RenderCallbacks,
@@ -59,6 +59,10 @@ export function createManifestRenderer(options: {
   const cache = new TileTextureCache()
   const loader = new TileLoader(cache)
   const clock = new Clock()
+
+  // Set output color space to LinearSRGB to maintain original color appearance
+  // This fixes the brightness issue introduced in Three.js r152+ where the default changed to sRGB
+  renderer.outputColorSpace = LinearSRGBColorSpace
 
   renderer.setPixelRatio(window.devicePixelRatio)
   renderer.setSize(...getParentSize(options.container))

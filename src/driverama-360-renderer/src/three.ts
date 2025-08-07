@@ -30,6 +30,8 @@ export {
   TOUCH,
   MOUSE,
   MathUtils,
+  LinearSRGBColorSpace,
+  SRGBColorSpace,
 } from 'three';
 
 export type { Camera } from 'three';
