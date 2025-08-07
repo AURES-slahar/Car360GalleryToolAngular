@@ -153,28 +153,52 @@ jobs:
         
         echo "✅ Deployment verified"
     
-    # Step 11: Update symlink to make it live (commented out for safety)
-    - name: Activate deployment (manual step for now)
+    # Step 11: Save current version for rollback
+    - name: Save current version
       run: |
-        echo "========================================="
-        echo "✅ DEPLOYMENT READY"
-        echo "========================================="
-        echo "📦 Release: ${{ steps.timestamp.outputs.timestamp }}"
-        echo "📍 Location: /var/www2/m.aaaauto/htdocs/photo360-beta/releases/${{ steps.timestamp.outputs.timestamp }}"
-        echo "⚠️  Status: Ready but NOT live"
-        echo ""
-        echo "To make this release live, run:"
-        echo "ln -sfn /var/www2/m.aaaauto/htdocs/photo360-beta/releases/${{ steps.timestamp.outputs.timestamp }} /var/www2/m.aaaauto/htdocs/photo360-beta/current"
-        echo ""
-        echo "Current releases:"
-        ls -lt /var/www2/m.aaaauto/htdocs/photo360-beta/releases/ | head -5
-        echo "========================================="
+        echo "💾 Saving current version for potential rollback..."
         
-        # Uncomment below to automatically switch to new version:
-        # ln -sfn "/var/www2/m.aaaauto/htdocs/photo360-beta/releases/${{ steps.timestamp.outputs.timestamp }}" "/var/www2/m.aaaauto/htdocs/photo360-beta/current"
-        # echo "✅ Symlink updated - deployment is now LIVE!"
+        BASE_DIR="/var/www/m.aaaauto/htdocs/photo360-beta"
+
+        /var/www/m.aaaauto/htdocs/photo360-beta/Car360GalleryTool/new-360-beta
+        
+        # If current symlink exists, save it as 'previous'
+        if [ -L "$BASE_DIR/current" ]; then
+          CURRENT_RELEASE=$(readlink "$BASE_DIR/Car360GalleryTool/new-360-beta")
+          ln -sfn "$CURRENT_RELEASE" "$BASE_DIR/releases/previous"
+          echo "✅ Previous version saved: $(basename $CURRENT_RELEASE)"
+        else
+          echo "⚠️ No current version found (first deployment?)"
+        fi
     
-    # Step 12: Cleanup old releases (keep last 5)
+    # Step 12: Switch to new release (MAKE IT LIVE!)
+    - name: Activate new release
+      run: |
+        echo "🔄 Switching to new release..."
+        
+        BASE_DIR="/var/www2/m.aaaauto/htdocs/photo360-beta"
+        NEW_RELEASE="$BASE_DIR/releases/${{ steps.timestamp.outputs.timestamp }}"
+        
+        # Update symlink atomically
+        ln -sfn "$NEW_RELEASE" "$BASE_DIR/Car360GalleryTool/new-360-beta"
+        
+        # Verify symlink
+        if [ "$(readlink $BASE_DIR/current)" = "$NEW_RELEASE" ]; then
+          echo "✅ Successfully switched to new release!"
+          echo "🎉 DEPLOYMENT IS NOW LIVE!"
+        else
+          echo "❌ Failed to update symlink"
+          exit 1
+        fi
+        
+        # Show current status
+        echo ""
+        echo "Current release: ${{ steps.timestamp.outputs.timestamp }}"
+        if [ -L "$BASE_DIR/releases/previous" ]; then
+          echo "Previous release: $(basename $(readlink $BASE_DIR/releases/previous))"
+        fi
+    
+    # Step 13: Cleanup old releases (keep last 5)
     - name: Cleanup old releases
       run: |
         echo "🧹 Cleaning up old releases..."
@@ -192,3 +216,21 @@ jobs:
         else
           echo "✅ No cleanup needed (keeping all $RELEASE_COUNT releases)"
         fi
+    
+    # Step 14: Final summary
+    - name: Deployment summary
+      run: |
+        echo "========================================="
+        echo "🎉 DEPLOYMENT COMPLETE AND LIVE!"
+        echo "========================================="
+        echo "📦 Release: ${{ steps.timestamp.outputs.timestamp }}"
+        echo "🔗 Commit: ${{ steps.timestamp.outputs.commit_sha }}"
+        echo "👤 Deployed by: ${{ github.actor }}"
+        echo "🌿 Branch: ${{ steps.timestamp.outputs.branch }}"
+        echo "⏰ Time: $(date)"
+        echo ""
+        echo "📁 Live at: /var/www2/m.aaaauto/htdocs/photo360-beta/Car360GalleryTool/new-360-beta"
+        echo "========================================="
+        
+        # Log to deployment history
+        echo "[$(date)] ${{ steps.timestamp.outputs.timestamp }} - ${{ github.actor }} - ${{ steps.timestamp.outputs.commit_sha }}" >> /var/www2/m.aaaauto/htdocs/photo360-beta/deployment.log
