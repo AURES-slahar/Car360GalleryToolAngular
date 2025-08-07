@@ -9,44 +9,68 @@
   top: 50%;
   left: 50%;
   z-index: 100;
+  
   &.loader--mobile {
     top: calc(50% - 40px);
     left: 50%;
   }
+  
   &.loader--light {
     &::after {
-      border: 6px solid rgb(var(--white-color));
-      border-color: rgb(var(--white-color)) transparent transparent transparent;
+      border: 3px solid rgba(var(--white-color), 0.3);
+      border-top: 3px solid rgb(var(--white-color));
     }
   }
+  
   &::before {
     content: "";
-    background-color: rgb(var(--black-color));
-    width: 80px;
-    height: 80px;
+    background: radial-gradient(circle, rgba(var(--black-color), 0.05) 0%, rgba(var(--black-color), 0.02) 50%, transparent 70%);
+    width: 200px;
+    height: 200px;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    opacity: 0.1;
-    box-shadow: 0 0 90px 180px rgb(var(--black-color));
     position: absolute;
     top: 50%;
     left: 50%;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
+  
   &::after {
     content: "";
-    width: 64px;
-    height: 64px;
-    animation: loaderAnimation 1.2s linear infinite;
-    border: 6px solid rgb(var(--white-color));
-    border-color: rgb(var(--white-color)) transparent transparent transparent;
+    width: 48px;
+    height: 48px;
+    animation: modernSpinner 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+    border: 3px solid rgba(var(--primary-color), 0.2);
+    border-top: 3px solid rgb(var(--primary-color));
     border-radius: 50%;
     display: block;
-    @keyframes loaderAnimation {
+    
+    @keyframes modernSpinner {
       0% {
-        transform: rotate(0deg);
+        transform: rotate(0deg) scale(0.8);
+      }
+      50% {
+        transform: rotate(180deg) scale(1.1);
       }
       100% {
-        transform: rotate(360deg);
+        transform: rotate(360deg) scale(0.8);
+      }
+    }
+  }
+  
+  // Modern pulse effect
+  &::before {
+    animation: loaderPulse 2s ease-in-out infinite;
+    
+    @keyframes loaderPulse {
+      0%, 100% {
+        opacity: 0.4;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      50% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1.05);
       }
     }
   }

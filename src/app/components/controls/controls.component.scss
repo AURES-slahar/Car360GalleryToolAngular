@@ -1,14 +1,17 @@
 .controls {
-  background-color: rgb(var(--white-color));
+  background-color: rgba(var(--white-color), 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   overflow: hidden;
   transition: all var(--transition);
   transform: translateX(-50%);
-  border-radius: var(--border-radius);
-  box-shadow: 0 1px 3px rgba(var(--black-color), 0.3);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(var(--border-color-light), 0.2);
+  box-shadow: var(--shadow-lg);
   display: flex;
   align-items: center;
   position: absolute;
-  bottom: 22px;
+  bottom: var(--space-lg);
   left: 50%;
   z-index: 1000;
   &.controls--hidden {
@@ -16,14 +19,17 @@
   }
   &.controls--mobile {
     background-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     transform: none;
-    padding: 0 18px;
+    padding: 0 var(--space-lg);
     border-radius: 0;
+    border: none;
     box-shadow: none;
     justify-content: center;
-    gap: 8px;
+    gap: var(--space-sm);
     right: 0;
-    bottom: 12px;
+    bottom: var(--space-md);
     left: 0;
   }
 }
