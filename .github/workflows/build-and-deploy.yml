@@ -49,8 +49,8 @@ jobs:
         fi
         
         # Check if your app folder exists (update the name!)
-        if [ ! -d "dist/photo360-beta" ]; then
-          echo "❌ Error: dist/photo360-beta not found"
+        if [ ! -d "dist/car360-gallery-tool-angular" ]; then
+          echo "❌ Error: dist/car360-gallery-tool-angular not found"
           echo "Found these folders in dist:"
           ls -la dist/
           exit 1
@@ -62,10 +62,10 @@ jobs:
         
         # List files in build
         echo "📁 Build contents:"
-        ls -la dist/photo360-beta/
+        ls -la dist/car360-gallery-tool-angular/
         
         # Check for index.html
-        if [ ! -f "dist/photo360-beta/index.html" ]; then
+        if [ ! -f "dist/car360-gallery-tool-angular/index.html" ]; then
           echo "❌ Error: index.html not found"
           exit 1
         fi
