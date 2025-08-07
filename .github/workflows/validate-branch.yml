@@ -1,0 +1,15 @@
+name: Validate Branch Name
+on:
+  pull_request:
+    types: [opened, edited]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch name
+        run: |
+          if ! [[ "${{ github.head_ref }}" =~ ^(feature|hotfix)/.*$ ]]; then
+            echo "Branch name must start with feature/ or hotfix/"
+            exit 1
+          fi
