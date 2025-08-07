@@ -37,7 +37,7 @@ export class InteriorMethod extends RenderMethod {
 
   constructor(
     tileLoader: TileLoader,
-    renderer: THREE.Renderer,
+    renderer: THREE.WebGLRenderer,
     callbacks: RenderCallbacks,
     options: RenderOptions,
     data: InteriorTilePanorama,

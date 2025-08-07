@@ -8,7 +8,8 @@ import {
   TransitionViewport
 } from '../render/RenderMethod'
 import { ExteriorTilePanorama } from '../types'
-import { clamp } from 'three/src/math/MathUtils'
+import { MathUtils } from '../three'
+const { clamp } = MathUtils
 import { TileLoader } from '../tile/TileLoader'
 import { ExteriorMapPlane } from './ExteriorMapPlane'
 import { RenderFrustum } from '../render/RenderFrustum'
@@ -55,7 +56,7 @@ export class ExteriorMethod extends RenderMethod {
 
   constructor(
     tileLoader: TileLoader,
-    renderer: THREE.Renderer,
+    renderer: THREE.WebGLRenderer,
     callbacks: RenderCallbacks,
     options: RenderOptions,
     data: ExteriorTilePanorama,

@@ -1,4 +1,4 @@
-import type { Renderer, Texture } from '../three'
+import type { WebGLRenderer, Texture } from '../three'
 import type { TileLoader } from '../tile/TileLoader'
 
 export type ObjectFit = 'cover' | 'contain'
@@ -22,7 +22,7 @@ export abstract class RenderMethod {
   // eslint-disable-next-line no-useless-constructor
   constructor(
     protected tileLoader: TileLoader,
-    protected renderer: Renderer,
+    protected renderer: WebGLRenderer,
     protected callbacks: RenderCallbacks,
     protected options: RenderOptions
   ) {}
