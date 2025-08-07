@@ -82,30 +82,22 @@ jobs:
         echo "commit_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
         echo "branch=${{ github.ref_name }}" >> $GITHUB_OUTPUT
     
-    # Step 7: Create release directory
-    - name: Create release directory
+    # Step 7: Prepare new release
+    - name: Prepare new release
       run: |
-        echo "📁 Creating release directory..."
+        echo "📁 Preparing new release..."
         
-        RELEASE_DIR="/var/www2/m.aaaauto/htdocs/photo360-beta/releases/${{ steps.timestamp.outputs.timestamp }}"
+        BASE_DIR="/var/www2/m.aaaauto/htdocs/photo360-beta"
+        TEMP_DIR="$BASE_DIR/.deploy_tmp_${{ steps.timestamp.outputs.timestamp }}"
         
-        # Create releases directory if it doesn't exist
-        mkdir -p "$RELEASE_DIR"
+        # Create temporary directory for new release
+        mkdir -p "$TEMP_DIR"
         
-        echo "✅ Release directory created: $RELEASE_DIR"
-    
-    # Step 8: Copy built app to release directory
-    - name: Deploy to production storage
-      run: |
-        echo "📤 Copying files to production storage..."
-        
-        RELEASE_DIR="/var/www2/m.aaaauto/htdocs/photo360-beta/releases/${{ steps.timestamp.outputs.timestamp }}"
-        
-        # Copy all built files
-        cp -r dist/car360-gallery-tool-angular/* "$RELEASE_DIR/"
+        # Copy built files to temp directory
+        cp -r dist/car360-gallery-tool-angular/* "$TEMP_DIR/"
         
         # Create deployment info file
-        cat > "$RELEASE_DIR/deployment.json" << EOF
+        cat > "$TEMP_DIR/deployment.json" << EOF
         {
           "timestamp": "${{ steps.timestamp.outputs.timestamp }}",
           "commit": "${{ steps.timestamp.outputs.commit_sha }}",
@@ -115,107 +107,115 @@ jobs:
         }
         EOF
         
-        echo "✅ Files copied successfully"
-    
-    # Step 9: Set proper permissions
+        echo "✅ New release prepared in temp directory"
+
+    # Step 8: Set permissions
     - name: Set permissions
       run: |
         echo "🔒 Setting proper permissions..."
         
-        RELEASE_DIR="/var/www2/m.aaaauto/htdocs/photo360-beta/releases/${{ steps.timestamp.outputs.timestamp }}"
+        TEMP_DIR="/var/www2/m.aaaauto/htdocs/photo360-beta/.deploy_tmp_${{ steps.timestamp.outputs.timestamp }}"
         
         # Set permissions for web server
-        find "$RELEASE_DIR" -type f -exec chmod 644 {} \;
-        find "$RELEASE_DIR" -type d -exec chmod 755 {} \;
+        find "$TEMP_DIR" -type f -exec chmod 644 {} \;
+        find "$TEMP_DIR" -type d -exec chmod 755 {} \;
         
         echo "✅ Permissions set"
     
-    # Step 10: Verify deployment
+   # Step 9: Create backup of current version
+    - name: Backup current version
+      run: |
+        echo "💾 Backing up current version..."
+        
+        BASE_DIR="/var/www2/m.aaaauto/htdocs/photo360-beta"
+        BACKUP_DIR="$BASE_DIR/releases/${{ steps.timestamp.outputs.timestamp }}_backup"
+        
+        # Create releases directory if it doesn't exist
+        mkdir -p "$BASE_DIR/releases"
+        
+        # If current production directory exists, copy it to backup
+        if [ -d "$BASE_DIR/Car360GalleryTool/new-360-beta" ]; then
+          cp -r "$BASE_DIR/Car360GalleryTool/new-360-beta" "$BACKUP_DIR"
+          echo "✅ Current version backed up to releases/${{ steps.timestamp.outputs.timestamp }}_backup"
+          
+          # Save backup info
+          echo "${{ steps.timestamp.outputs.timestamp }}_backup" > "$BASE_DIR/.previous_release"
+        else
+          echo "⚠️ No current version found (first deployment?)"
+        fi
+
+    # Step 10: Deploy new version atomically
+    - name: Switch to new version
+      run: |
+        echo "🔄 Deploying new version..."
+        
+        BASE_DIR="/var/www2/m.aaaauto/htdocs/photo360-beta"
+        TEMP_DIR="$BASE_DIR/.deploy_tmp_${{ steps.timestamp.outputs.timestamp }}"
+        CURRENT_DIR="$BASE_DIR/Car360GalleryTool/new-360-beta"
+        OLD_DIR="$BASE_DIR/.old_${{ steps.timestamp.outputs.timestamp }}"
+        
+        # Atomic deployment using directory renaming
+        if [ -d "$CURRENT_DIR" ]; then
+          # Move current to old (instant)
+          mv "$CURRENT_DIR" "$OLD_DIR"
+        fi
+        
+        # Move new version to current (instant)
+        mv "$TEMP_DIR" "$CURRENT_DIR"
+        
+        # Remove old version after successful switch
+        if [ -d "$OLD_DIR" ]; then
+          rm -rf "$OLD_DIR"
+        fi
+        
+        echo "✅ Successfully deployed new version!"
+        echo "🎉 DEPLOYMENT IS NOW LIVE!"
+    
+    # Step 11: Verify deployment
     - name: Verify deployment
       run: |
         echo "🔍 Verifying deployment..."
         
-        RELEASE_DIR="/var/www2/m.aaaauto/htdocs/photo360-beta/releases/${{ steps.timestamp.outputs.timestamp }}"
+        CURRENT_DIR="/var/www2/m.aaaauto/htdocs/photo360-beta/Car360GalleryTool/new-360-beta"
         
         # Check if critical files exist
-        if [ ! -f "$RELEASE_DIR/index.html" ]; then
-          echo "❌ Error: index.html not found in release directory"
+        if [ ! -f "$CURRENT_DIR/index.html" ]; then
+          echo "❌ Error: index.html not found in current directory"
           exit 1
         fi
         
-        # Count files
-        FILE_COUNT=$(find "$RELEASE_DIR" -type f | wc -l)
-        echo "📊 Files deployed: $FILE_COUNT"
-        
-        # Check directory size
-        DIR_SIZE=$(du -sh "$RELEASE_DIR" | cut -f1)
-        echo "📊 Release size: $DIR_SIZE"
-        
-        echo "✅ Deployment verified"
-    
-    # Step 11: Save current version for rollback
-    - name: Save current version
-      run: |
-        echo "💾 Saving current version for potential rollback..."
-        
-        BASE_DIR="/var/www2/m.aaaauto/htdocs/photo360-beta"
-        
-        # If current symlink exists, save it as 'previous'
-        if [ -L "$BASE_DIR/current" ]; then
-          CURRENT_RELEASE=$(readlink "$BASE_DIR/Car360GalleryTool/new-360-beta")
-          ln -sfn "$CURRENT_RELEASE" "$BASE_DIR/previous"
-          echo "✅ Previous version saved: $(basename $CURRENT_RELEASE)"
-        else
-          echo "⚠️ No current version found (first deployment?)"
-        fi
-    
-    # Step 12: Switch to new release (MAKE IT LIVE!)
-    - name: Activate new release
-      run: |
-        echo "🔄 Switching to new release..."
-        
-        BASE_DIR="/var/www2/m.aaaauto/htdocs/photo360-beta"
-        NEW_RELEASE="$BASE_DIR/releases/${{ steps.timestamp.outputs.timestamp }}"
-        
-        # Update symlink atomically
-        ln -sfn "$NEW_RELEASE" "$BASE_DIR/Car360GalleryTool/new-360-beta"
-        
-        # Verify symlink
-        if [ "$(readlink $BASE_DIR/Car360GalleryTool/new-360-beta)" = "$NEW_RELEASE" ]; then
-          echo "✅ Successfully switched to new release!"
-          echo "🎉 DEPLOYMENT IS NOW LIVE!"
-        else
-          echo "❌ Failed to update symlink"
+        if [ ! -f "$CURRENT_DIR/deployment.json" ]; then
+          echo "❌ Error: deployment.json not found"
           exit 1
         fi
         
-        # Show current status
+        # Show deployment info
+        echo "📋 Deployment info:"
+        cat "$CURRENT_DIR/deployment.json"
+        
         echo ""
-        echo "Current release: ${{ steps.timestamp.outputs.timestamp }}"
-        if [ -L "$BASE_DIR/previous" ]; then
-          echo "Previous release: $(basename $(readlink $BASE_DIR/previous))"
-        fi
+        echo "✅ Deployment verified successfully"
     
-    # Step 13: Cleanup old releases (keep last 5)
+    # Step 12: Cleanup old backups (keep last 5)
     - name: Cleanup old releases
       run: |
-        echo "🧹 Cleaning up old releases..."
+        echo "🧹 Cleaning up old backups..."
         
         cd /var/www2/m.aaaauto/htdocs/photo360-beta/releases/
         
-        # Count releases
-        RELEASE_COUNT=$(ls -1 | wc -l)
-        echo "Total releases: $RELEASE_COUNT"
+        # Count backup directories
+        BACKUP_COUNT=$(ls -1d *_backup 2>/dev/null | wc -l)
+        echo "Total backups: $BACKUP_COUNT"
         
-        if [ $RELEASE_COUNT -gt 5 ]; then
-          # Remove old releases (keep last 5)
-          ls -t | tail -n +6 | xargs -r rm -rf
-          echo "✅ Old releases removed"
+        if [ $BACKUP_COUNT -gt 10 ]; then
+          # Remove old backups (keep last 10)
+          ls -td *_backup | tail -n +6 | xargs -r rm -rf
+          echo "✅ Old backups removed"
         else
-          echo "✅ No cleanup needed (keeping all $RELEASE_COUNT releases)"
+          echo "✅ No cleanup needed (keeping all $BACKUP_COUNT backups)"
         fi
     
-    # Step 14: Final summary
+    # Step 13: Final summary
     - name: Deployment summary
       run: |
         echo "========================================="
@@ -227,7 +227,7 @@ jobs:
         echo "🌿 Branch: ${{ steps.timestamp.outputs.branch }}"
         echo "⏰ Time: $(date)"
         echo ""
-        echo "📁 Live at: /var/www2/m.aaaauto/htdocs/photo360-beta/Car360GalleryTool/new-360-beta"
+        echo "📁 Live at: /var/www2/m.aaaauto/htdocs/photo360-beta/Car360GalleryTool/new-360-beta/"
         echo "========================================="
         
         # Log to deployment history
