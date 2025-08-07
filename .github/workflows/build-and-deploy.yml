@@ -1,14 +1,14 @@
-name: Build Angular App
+name: Build and Deploy Angular App
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch:  # Allow manual trigger
+  workflow_dispatch:
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: self-hosted
     
     steps:
@@ -41,24 +41,20 @@ jobs:
     - name: Verify build
       run: |
         echo "🔍 Checking build output..."
-        
+
         # Check if dist folder exists
         if [ ! -d "dist" ]; then
           echo "❌ Error: dist folder not found"
           exit 1
         fi
         
-        # Check if your app folder exists (update the name!)
+        # Check if your app folder exists
         if [ ! -d "dist/car360-gallery-tool-angular" ]; then
           echo "❌ Error: dist/car360-gallery-tool-angular not found"
           echo "Found these folders in dist:"
           ls -la dist/
           exit 1
         fi
-        
-        # Check build size
-        BUILD_SIZE=$(du -sh dist/ | cut -f1)
-        echo "📊 Build size: $BUILD_SIZE"
         
         # List files in build
         echo "📁 Build contents:"
@@ -70,4 +66,129 @@ jobs:
           exit 1
         fi
         
+        BUILD_SIZE=$(du -sh dist/car360-gallery-tool-angular | cut -f1)
+        echo "📊 Build size: $BUILD_SIZE"
         echo "✅ Build verification passed!"
+    
+    # Step 6: Generate timestamp for release
+    - name: Generate release timestamp
+      id: timestamp
+      run: |
+        TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+        echo "📅 Release timestamp: $TIMESTAMP"
+        echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
+        
+        # Also save commit info
+        echo "commit_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        echo "branch=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+    
+    # Step 7: Create release directory
+    - name: Create release directory
+      run: |
+        echo "📁 Creating release directory..."
+        
+        RELEASE_DIR="/var/www2/m.aaaauto/htdocs/photo360-beta/releases/${{ steps.timestamp.outputs.timestamp }}"
+        
+        # Create releases directory if it doesn't exist
+        mkdir -p "$RELEASE_DIR"
+        
+        echo "✅ Release directory created: $RELEASE_DIR"
+    
+    # Step 8: Copy built app to release directory
+    - name: Deploy to production storage
+      run: |
+        echo "📤 Copying files to production storage..."
+        
+        RELEASE_DIR="/var/www2/m.aaaauto/htdocs/photo360-beta/releases/${{ steps.timestamp.outputs.timestamp }}"
+        
+        # Copy all built files
+        cp -r dist/car360-gallery-tool-angular/* "$RELEASE_DIR/"
+        
+        # Create deployment info file
+        cat > "$RELEASE_DIR/deployment.json" << EOF
+        {
+          "timestamp": "${{ steps.timestamp.outputs.timestamp }}",
+          "commit": "${{ steps.timestamp.outputs.commit_sha }}",
+          "branch": "${{ steps.timestamp.outputs.branch }}",
+          "deployer": "${{ github.actor }}",
+          "deploy_time": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+        }
+        EOF
+        
+        echo "✅ Files copied successfully"
+    
+    # Step 9: Set proper permissions
+    - name: Set permissions
+      run: |
+        echo "🔒 Setting proper permissions..."
+        
+        RELEASE_DIR="/var/www2/m.aaaauto/htdocs/photo360-beta/releases/${{ steps.timestamp.outputs.timestamp }}"
+        
+        # Set permissions for web server
+        find "$RELEASE_DIR" -type f -exec chmod 644 {} \;
+        find "$RELEASE_DIR" -type d -exec chmod 755 {} \;
+        
+        echo "✅ Permissions set"
+    
+    # Step 10: Verify deployment
+    - name: Verify deployment
+      run: |
+        echo "🔍 Verifying deployment..."
+        
+        RELEASE_DIR="/var/www2/m.aaaauto/htdocs/photo360-beta/releases/${{ steps.timestamp.outputs.timestamp }}"
+        
+        # Check if critical files exist
+        if [ ! -f "$RELEASE_DIR/index.html" ]; then
+          echo "❌ Error: index.html not found in release directory"
+          exit 1
+        fi
+        
+        # Count files
+        FILE_COUNT=$(find "$RELEASE_DIR" -type f | wc -l)
+        echo "📊 Files deployed: $FILE_COUNT"
+        
+        # Check directory size
+        DIR_SIZE=$(du -sh "$RELEASE_DIR" | cut -f1)
+        echo "📊 Release size: $DIR_SIZE"
+        
+        echo "✅ Deployment verified"
+    
+    # Step 11: Update symlink to make it live (commented out for safety)
+    - name: Activate deployment (manual step for now)
+      run: |
+        echo "========================================="
+        echo "✅ DEPLOYMENT READY"
+        echo "========================================="
+        echo "📦 Release: ${{ steps.timestamp.outputs.timestamp }}"
+        echo "📍 Location: /var/www2/m.aaaauto/htdocs/photo360-beta/releases/${{ steps.timestamp.outputs.timestamp }}"
+        echo "⚠️  Status: Ready but NOT live"
+        echo ""
+        echo "To make this release live, run:"
+        echo "ln -sfn /var/www2/m.aaaauto/htdocs/photo360-beta/releases/${{ steps.timestamp.outputs.timestamp }} /var/www2/m.aaaauto/htdocs/photo360-beta/current"
+        echo ""
+        echo "Current releases:"
+        ls -lt /var/www2/m.aaaauto/htdocs/photo360-beta/releases/ | head -5
+        echo "========================================="
+        
+        # Uncomment below to automatically switch to new version:
+        # ln -sfn "/var/www2/m.aaaauto/htdocs/photo360-beta/releases/${{ steps.timestamp.outputs.timestamp }}" "/var/www2/m.aaaauto/htdocs/photo360-beta/current"
+        # echo "✅ Symlink updated - deployment is now LIVE!"
+    
+    # Step 12: Cleanup old releases (keep last 5)
+    - name: Cleanup old releases
+      run: |
+        echo "🧹 Cleaning up old releases..."
+        
+        cd /var/www2/m.aaaauto/htdocs/photo360-beta/releases/
+        
+        # Count releases
+        RELEASE_COUNT=$(ls -1 | wc -l)
+        echo "Total releases: $RELEASE_COUNT"
+        
+        if [ $RELEASE_COUNT -gt 5 ]; then
+          # Remove old releases (keep last 5)
+          ls -t | tail -n +6 | xargs -r rm -rf
+          echo "✅ Old releases removed"
+        else
+          echo "✅ No cleanup needed (keeping all $RELEASE_COUNT releases)"
+        fi
