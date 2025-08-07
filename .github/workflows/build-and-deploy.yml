@@ -158,14 +158,12 @@ jobs:
       run: |
         echo "💾 Saving current version for potential rollback..."
         
-        BASE_DIR="/var/www/m.aaaauto/htdocs/photo360-beta"
-
-        /var/www/m.aaaauto/htdocs/photo360-beta/Car360GalleryTool/new-360-beta
+        BASE_DIR="/var/www2/m.aaaauto/htdocs/photo360-beta"
         
         # If current symlink exists, save it as 'previous'
         if [ -L "$BASE_DIR/current" ]; then
           CURRENT_RELEASE=$(readlink "$BASE_DIR/Car360GalleryTool/new-360-beta")
-          ln -sfn "$CURRENT_RELEASE" "$BASE_DIR/releases/previous"
+          ln -sfn "$CURRENT_RELEASE" "$BASE_DIR/previous"
           echo "✅ Previous version saved: $(basename $CURRENT_RELEASE)"
         else
           echo "⚠️ No current version found (first deployment?)"
@@ -183,7 +181,7 @@ jobs:
         ln -sfn "$NEW_RELEASE" "$BASE_DIR/Car360GalleryTool/new-360-beta"
         
         # Verify symlink
-        if [ "$(readlink $BASE_DIR/current)" = "$NEW_RELEASE" ]; then
+        if [ "$(readlink $BASE_DIR/Car360GalleryTool/new-360-beta)" = "$NEW_RELEASE" ]; then
           echo "✅ Successfully switched to new release!"
           echo "🎉 DEPLOYMENT IS NOW LIVE!"
         else
@@ -194,8 +192,8 @@ jobs:
         # Show current status
         echo ""
         echo "Current release: ${{ steps.timestamp.outputs.timestamp }}"
-        if [ -L "$BASE_DIR/releases/previous" ]; then
-          echo "Previous release: $(basename $(readlink $BASE_DIR/releases/previous))"
+        if [ -L "$BASE_DIR/previous" ]; then
+          echo "Previous release: $(basename $(readlink $BASE_DIR/previous))"
         fi
     
     # Step 13: Cleanup old releases (keep last 5)
