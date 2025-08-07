@@ -4,4 +4,17 @@
   overflow: hidden;
   position: relative;
   z-index: 1;
+  background: rgb(var(--background-color-primary));
+  
+  // Modern smooth scrolling for any child content
+  scroll-behavior: smooth;
+  
+  // Improved focus management for accessibility
+  &:focus-within {
+    outline: none;
+  }
+  
+  // Ensure consistent rendering across browsers
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

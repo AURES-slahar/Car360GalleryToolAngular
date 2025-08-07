@@ -5,11 +5,15 @@ html, body {
 }
 
 body {
-  background-color: rgb(var(--white-color));
-  font-family: "Open Sans", arial, sans-serif;
-  font-size: 14px;
+  background-color: rgb(var(--surface-color));
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
   color: rgb(var(--text-color));
-  line-height: 24px;
+  line-height: var(--line-height-normal);
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   @import "scss/components/canvas";
   &.dark {
     background-color: rgb(var(--black-color));
